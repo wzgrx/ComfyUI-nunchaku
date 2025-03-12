@@ -11,9 +11,9 @@ from nunchaku import NunchakuFluxTransformer2dModel
 from torch import nn
 
 
-class ComfyUIFluxForwardWrapper(nn.Module):
+class ComfyFluxForwardWrapper(nn.Module):
     def __init__(self, model: NunchakuFluxTransformer2dModel, config):
-        super(ComfyUIFluxForwardWrapper, self).__init__()
+        super(ComfyFluxForwardWrapper, self).__init__()
         self.model = model
         self.dtype = next(model.parameters()).dtype
         self.config = config
@@ -148,42 +148,63 @@ class NunchakuFluxDiTLoader:
             model_path, precision=precision, offload=cpu_offload_enabled
         )
         transformer = transformer.to(device)
-        dit_config = {
-            "image_model": "flux",
-            "patch_size": 2,
-            "out_channels": 16,
-            "vec_in_dim": 768,
-            "context_in_dim": 4096,
-            "hidden_size": 3072,
-            "mlp_ratio": 4.0,
-            "num_heads": 24,
-            "depth": 19,
-            "depth_single_blocks": 38,
-            "axes_dim": [16, 56, 56],
-            "theta": 10000,
-            "qkv_bias": True,
-            "guidance_embed": True,
-            "disable_unet_model_creation": True,
-        }
-
-        if "schnell" in model_path:
-            dit_config["guidance_embed"] = False
-            dit_config["in_channels"] = 16
+        if "shuttle-jaguar" in model_path:
+            dit_config = {
+                "image_model": "flux",
+                "in_channels": 16,
+                "patch_size": 2,
+                "out_channels": 16,
+                "vec_in_dim": 768,
+                "context_in_dim": 4096,
+                "hidden_size": 3072,
+                "mlp_ratio": 4.0,
+                "num_heads": 24,
+                "depth": 19,
+                "depth_single_blocks": 38,
+                "axes_dim": [16, 56, 56],
+                "theta": 10000,
+                "qkv_bias": True,
+                "guidance_embed": False,
+            }
             model_config = FluxSchnell(dit_config)
-        elif "canny" in model_path or "depth" in model_path:
-            dit_config["in_channels"] = 32
-            model_config = Flux(dit_config)
-        elif "fill" in model_path:
-            dit_config["in_channels"] = 64
-            model_config = Flux(dit_config)
         else:
-            dit_config["in_channels"] = 16
-            model_config = Flux(dit_config)
+            # by default, it is dev
+            dit_config = {
+                "image_model": "flux",
+                "patch_size": 2,
+                "out_channels": 16,
+                "vec_in_dim": 768,
+                "context_in_dim": 4096,
+                "hidden_size": 3072,
+                "mlp_ratio": 4.0,
+                "num_heads": 24,
+                "depth": 19,
+                "depth_single_blocks": 38,
+                "axes_dim": [16, 56, 56],
+                "theta": 10000,
+                "qkv_bias": True,
+                "guidance_embed": True,
+                "disable_unet_model_creation": True,
+            }
+
+            if "schnell" in model_path:
+                dit_config["guidance_embed"] = False
+                dit_config["in_channels"] = 16
+                model_config = FluxSchnell(dit_config)
+            elif "canny" in model_path or "depth" in model_path:
+                dit_config["in_channels"] = 32
+                model_config = Flux(dit_config)
+            elif "fill" in model_path:
+                dit_config["in_channels"] = 64
+                model_config = Flux(dit_config)
+            else:
+                dit_config["in_channels"] = 16
+                model_config = Flux(dit_config)
 
         model_config.set_inference_dtype(torch.bfloat16, None)
         model_config.custom_operations = None
 
         model = model_config.get_model({})
-        model.diffusion_model = ComfyUIFluxForwardWrapper(transformer, config=dit_config)
+        model.diffusion_model = ComfyFluxForwardWrapper(transformer, config=dit_config)
         model = comfy.model_patcher.ModelPatcher(model, device, device_id)
         return (model,)
