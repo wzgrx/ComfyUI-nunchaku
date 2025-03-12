@@ -6,10 +6,10 @@ from nunchaku.lora.flux import comfyui2diffusers, convert_to_nunchaku_flux_lowra
 from safetensors.torch import save_file
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("SVDQuantFluxLoraLoader")
+logger = logging.getLogger("NunchakuFluxLoraLoader")
 
 
-class SVDQuantFluxLoraLoader:
+class NunchakuFluxLoraLoader:
     def __init__(self):
         self.cur_lora_name = "None"
 
@@ -66,9 +66,9 @@ class SVDQuantFluxLoraLoader:
     RETURN_TYPES = ("MODEL",)
     OUTPUT_TOOLTIPS = ("The modified diffusion model.",)
     FUNCTION = "load_lora"
-    TITLE = "SVDQuant FLUX.1 LoRA Loader"
+    TITLE = "Nunchaku FLUX.1 LoRA Loader"
 
-    CATEGORY = "SVDQuant"
+    CATEGORY = "Nunchaku"
     DESCRIPTION = (
         "LoRAs are used to modify the diffusion model, "
         "altering the way in which latents are denoised such as applying styles. "

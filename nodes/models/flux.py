@@ -62,7 +62,7 @@ class ComfyUIFluxForwardWrapper(nn.Module):
         return out
 
 
-class SVDQuantFluxDiTLoader:
+class NunchakuFluxDiTLoader:
     @classmethod
     def INPUT_TYPES(s):
         prefixes = folder_paths.folder_names_and_paths["diffusion_models"][0]
@@ -80,10 +80,7 @@ class SVDQuantFluxDiTLoader:
         ngpus = torch.cuda.device_count()
         return {
             "required": {
-                "model_path": (
-                    model_paths,
-                    {"tooltip": "The SVDQuant quantized FLUX.1 models. It can be a huggingface path or a local path."},
-                ),
+                "model_path": (model_paths, {"tooltip": "The SVDQuant quantized FLUX.1 models."}),
                 "cpu_offload": (
                     ["auto", "enable", "disable"],
                     {
@@ -108,8 +105,8 @@ class SVDQuantFluxDiTLoader:
 
     RETURN_TYPES = ("MODEL",)
     FUNCTION = "load_model"
-    CATEGORY = "SVDQuant"
-    TITLE = "SVDQuant Flux DiT Loader"
+    CATEGORY = "Nunchaku"
+    TITLE = "Nunchaku Flux DiT Loader"
 
     def load_model(self, model_path: str, cpu_offload: str, device_id: int, **kwargs) -> tuple[FluxTransformer2DModel]:
         device = f"cuda:{device_id}"
