@@ -4,10 +4,9 @@ import types
 import comfy.sd
 import folder_paths
 import torch
+from nunchaku import NunchakuT5EncoderModel
 from torch import nn
 from transformers import T5EncoderModel
-
-from nunchaku import NunchakuT5EncoderModel
 
 
 def svdquant_t5_forward(

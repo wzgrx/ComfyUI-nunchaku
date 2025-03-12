@@ -1,9 +1,21 @@
-# SVDQuant ComfyUI Node
+<div align="center" id="nunchaku_logo">
+  <img src="https://raw.githubusercontent.com/mit-han-lab/nunchaku/96615bd93a1f0d2cf98039fddecfec43ce34cc96/assets/nunchaku.svg" alt="logo" width="220"></img>
+</div>
+<h4 align="center">
+<a href="http://arxiv.org/abs/2411.05007"><b>Paper</b></a> | <a href="https://hanlab.mit.edu/projects/svdquant"><b>Website</b></a> | <a href="https://hanlab.mit.edu/blog/svdquant"><b>Blog</b></a> | <a href="https://svdquant.mit.edu"><b>Demo</b></a> | <a href="https://huggingface.co/collections/mit-han-lab/svdquant-67493c2c2e62a1fc6e93f45c"><b>HuggingFace</b></a> | <a href="https://modelscope.cn/collections/svdquant-468e8f780c2641"><b>ModelScope</b></a>
+</h4>
+[**Nunchaku**](https://github.com/mit-han-lab/deepcompressor) is an efficient inference engine designed for 4-bit diffusion models quantized by [SVDQuant](http://arxiv.org/abs/2411.05007). This repository is the ComfyUI node for nunchaku. Please check [DeepCompressor](https://github.com/mit-han-lab/deepcompressor) for the quantization library.
 
-![comfyui](../assets/comfyui.jpg)
+Check [here](https://github.com/mit-han-lab/nunchaku/issues/149) to join our user groups on [**Slack**](https://join.slack.com/t/nunchaku/shared_invite/zt-3170agzoz-NgZzWaTrEj~n2KEV3Hpl5Q) and [**WeChat**](https://github.com/mit-han-lab/nunchaku/blob/main/assets/wechat.jpg?raw=true) for discussions! If you have any questions, encounter issues, or are interested in contributing to the codebase, feel free to share your thoughts there!
+
+# Nunchaku ComfyUI Node
+
+![comfyui](assets/comfyui.jpg)
 ## Installation
 
-Please first install `nunchaku` following the instructions in [README.md](https://github.com/mit-han-lab/nunchaku?tab=readme-ov-file#installation). Then just install `image_gen_aux` with 
+Please first install `nunchaku` following the instructions in [README.md](https://github.com/mit-han-lab/nunchaku?tab=readme-ov-file#installation). 
+
+**[Optional]** You need to install `image_gen_aux` if you are using our depth-to-image workflow:
 
 ```shell
 pip install git+https://github.com/asomoza/image_gen_aux.git
@@ -13,10 +25,11 @@ pip install git+https://github.com/asomoza/image_gen_aux.git
 
 ```shell
 pip install comfy-cli  # install the comfyui-cli
-comfy node registry-install svdquant
+comfy install # install comfyui
+comfy node registry-install nunchaku
 ```
 
-### ComfyUI-Manager (Experimental)
+### ComfyUI-Manager
 
 1. Install [ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager) with the following commands then restart ComfyUI:
 
@@ -25,7 +38,7 @@ comfy node registry-install svdquant
    git clone https://github.com/ltdrdata/ComfyUI-Manager comfyui-manager
    ```
 
-2. Open the Manager, search `svdquant` in the Custom Nodes Manager and then install it.
+2. Open the Manager, search `nunchaku` in the Custom Nodes Manager and then install it.
 
 
 ### Manual Installation
@@ -59,7 +72,7 @@ comfy node registry-install svdquant
 
 1. **Set Up ComfyUI and SVDQuant**:
 
-     * SVDQuant workflows can be found at [`workflows`](./workflows). You can place them in `user/default/workflows` in ComfyUI root directory to load them. For example:
+     * Nunchaku workflows can be found at [`workflows`](./workflows). You can place them in `user/default/workflows` in ComfyUI root directory to load them. For example:
 
        ```shell
        cd ComfyUI

@@ -2,9 +2,8 @@ import logging
 import os
 
 import folder_paths
-from safetensors.torch import save_file
-
 from nunchaku.lora.flux import comfyui2diffusers, convert_to_nunchaku_flux_lowrank_dict, detect_format, xlab2diffusers
+from safetensors.torch import save_file
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("SVDQuantFluxLoraLoader")

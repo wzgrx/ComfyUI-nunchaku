@@ -7,9 +7,8 @@ from comfy.ldm.common_dit import pad_to_patch_size
 from comfy.supported_models import Flux, FluxSchnell
 from diffusers import FluxTransformer2DModel
 from einops import rearrange, repeat
-from torch import nn
-
 from nunchaku import NunchakuFluxTransformer2dModel
+from torch import nn
 
 
 class ComfyUIFluxForwardWrapper(nn.Module):
