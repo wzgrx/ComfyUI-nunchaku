@@ -4,7 +4,7 @@ import json
 def main():
     config = {
         "model_class": "Flux",
-        "model_config": {
+        "dit_config": {
             "image_model": "flux",
             "patch_size": 2,
             "out_channels": 16,

@@ -1,3 +1,4 @@
+import json
 import os
 
 import comfy.model_patcher
@@ -18,17 +19,7 @@ class ComfyFluxForwardWrapper(nn.Module):
         self.dtype = next(model.parameters()).dtype
         self.config = config
 
-    def forward(
-        self,
-        x,
-        timestep,
-        context,
-        y,
-        guidance,
-        control=None,
-        transformer_options={},
-        **kwargs,
-    ):
+    def forward(self, x, timestep, context, y, guidance, control=None, transformer_options={}, **kwargs):
         assert control is None  # for now
         bs, c, h, w = x.shape
         patch_size = self.config["patch_size"]
@@ -148,63 +139,21 @@ class NunchakuFluxDiTLoader:
             model_path, precision=precision, offload=cpu_offload_enabled
         )
         transformer = transformer.to(device)
-        if "shuttle-jaguar" in model_path:
-            dit_config = {
-                "image_model": "flux",
-                "in_channels": 16,
-                "patch_size": 2,
-                "out_channels": 16,
-                "vec_in_dim": 768,
-                "context_in_dim": 4096,
-                "hidden_size": 3072,
-                "mlp_ratio": 4.0,
-                "num_heads": 24,
-                "depth": 19,
-                "depth_single_blocks": 38,
-                "axes_dim": [16, 56, 56],
-                "theta": 10000,
-                "qkv_bias": True,
-                "guidance_embed": False,
-            }
-            model_config = FluxSchnell(dit_config)
+
+        if os.path.exists(os.path.join(model_path, "comfy_config.json")):
+            config_path = os.path.join(model_path, "comfy_config.json")
         else:
-            # by default, it is dev
-            dit_config = {
-                "image_model": "flux",
-                "patch_size": 2,
-                "out_channels": 16,
-                "vec_in_dim": 768,
-                "context_in_dim": 4096,
-                "hidden_size": 3072,
-                "mlp_ratio": 4.0,
-                "num_heads": 24,
-                "depth": 19,
-                "depth_single_blocks": 38,
-                "axes_dim": [16, 56, 56],
-                "theta": 10000,
-                "qkv_bias": True,
-                "guidance_embed": True,
-                "disable_unet_model_creation": True,
-            }
+            default_config_root = os.path.join(os.path.dirname(__file__), "configs")
+            config_name = os.path.basename(model_path).replace("svdq-int4-", "").replace("svdq-fp4-", "")
+            config_path = os.path.join(default_config_root, f"{config_name}.json")
+            assert os.path.exists(config_path), f"Config file not found: {config_path}"
 
-            if "schnell" in model_path:
-                dit_config["guidance_embed"] = False
-                dit_config["in_channels"] = 16
-                model_config = FluxSchnell(dit_config)
-            elif "canny" in model_path or "depth" in model_path:
-                dit_config["in_channels"] = 32
-                model_config = Flux(dit_config)
-            elif "fill" in model_path:
-                dit_config["in_channels"] = 64
-                model_config = Flux(dit_config)
-            else:
-                dit_config["in_channels"] = 16
-                model_config = Flux(dit_config)
-
+        comfy_config = json.load(open(config_path, "r"))
+        model_class_name = comfy_config["model_class"]
+        model_config = eval(model_class_name)(comfy_config["model_config"])
         model_config.set_inference_dtype(torch.bfloat16, None)
         model_config.custom_operations = None
-
         model = model_config.get_model({})
-        model.diffusion_model = ComfyFluxForwardWrapper(transformer, config=dit_config)
+        model.diffusion_model = ComfyFluxForwardWrapper(transformer, config=comfy_config["model_config"])
         model = comfy.model_patcher.ModelPatcher(model, device, device_id)
         return (model,)
