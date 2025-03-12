@@ -1,2 +1,2 @@
-from .flux import SVDQuantFluxDiTLoader
-from .text_encoder import SVDQuantTextEncoderLoader
+from .flux import NunchakuFluxDiTLoader
+from .text_encoder import NunchakuTextEncoderLoader

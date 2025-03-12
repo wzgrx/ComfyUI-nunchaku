@@ -1,5 +1,6 @@
 import logging
 import os
+import tempfile
 
 import folder_paths
 from nunchaku.lora.flux import comfyui2diffusers, convert_to_nunchaku_flux_lowrank_dict, detect_format, xlab2diffusers
@@ -115,7 +116,7 @@ class NunchakuFluxLoraLoader:
                         base_model_path = os.path.join(base_model_name, "transformer_blocks.safetensors")
                     state_dict = convert_to_nunchaku_flux_lowrank_dict(base_model_path, input_lora)
 
-                    if save_converted_lora == "enable" and lora_format != "svdquant":
+                    if save_converted_lora == "enable":
                         dirname = os.path.dirname(lora_path)
                         basename = os.path.basename(lora_path)
                         if "int4" in base_model_path:
@@ -130,7 +131,16 @@ class NunchakuFluxLoraLoader:
                             logger.info(f"Saved converted LoRA to: {lora_converted_path}")
                         else:
                             logger.info(f"Converted LoRA already exists at: {lora_converted_path}")
-                    model.model.diffusion_model.model.update_lora_params(state_dict)
+                        model.model.diffusion_model.model.update_lora_params(lora_converted_path)
+                    else:
+                        with tempfile.NamedTemporaryFile(suffix=".safetensors", delete=False) as tmp_file:
+                            tmp_file_path = tmp_file.name
+                            tmp_file.close()
+                            try:
+                                save_file(state_dict, tmp_file_path)
+                                model.model.diffusion_model.model.update_lora_params(tmp_file_path)
+                            finally:
+                                os.remove(tmp_file_path)
                 else:
                     model.model.diffusion_model.model.update_lora_params(lora_path)
                 model.model.diffusion_model.model.set_lora_strength(lora_strength)
