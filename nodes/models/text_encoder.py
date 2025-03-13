@@ -4,13 +4,12 @@ import types
 import comfy.sd
 import folder_paths
 import torch
+from nunchaku import NunchakuT5EncoderModel
 from torch import nn
 from transformers import T5EncoderModel
 
-from nunchaku import NunchakuT5EncoderModel
 
-
-def svdquant_t5_forward(
+def nunchaku_t5_forward(
     self: T5EncoderModel,
     input_ids: torch.LongTensor,
     attention_mask,
@@ -42,7 +41,7 @@ class WrappedEmbedding(nn.Module):
         return self.embedding.weight
 
 
-class SVDQuantTextEncoderLoader:
+class NunchakuTextEncoderLoader:
     @classmethod
     def INPUT_TYPES(s):
         prefixes = folder_paths.folder_names_and_paths["text_encoders"][0]
@@ -74,9 +73,9 @@ class SVDQuantTextEncoderLoader:
     RETURN_TYPES = ("CLIP",)
     FUNCTION = "load_text_encoder"
 
-    CATEGORY = "SVDQuant"
+    CATEGORY = "Nunchaku"
 
-    TITLE = "SVDQuant Text Encoder Loader"
+    TITLE = "Nunchaku Text Encoder Loader"
 
     def load_text_encoder(
         self,
@@ -118,7 +117,7 @@ class SVDQuantTextEncoderLoader:
             if model_path is None:
                 model_path = int4_model
             transformer = NunchakuT5EncoderModel.from_pretrained(model_path)
-            transformer.forward = types.MethodType(svdquant_t5_forward, transformer)
+            transformer.forward = types.MethodType(nunchaku_t5_forward, transformer)
             transformer.shared = WrappedEmbedding(transformer.shared)
 
             clip.cond_stage_model.t5xxl.transformer = (

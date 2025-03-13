@@ -1,3 +1,4 @@
+import json
 import os
 
 import comfy.model_patcher
@@ -7,29 +8,18 @@ from comfy.ldm.common_dit import pad_to_patch_size
 from comfy.supported_models import Flux, FluxSchnell
 from diffusers import FluxTransformer2DModel
 from einops import rearrange, repeat
+from nunchaku import NunchakuFluxTransformer2dModel
 from torch import nn
 
-from nunchaku import NunchakuFluxTransformer2dModel
 
-
-class ComfyUIFluxForwardWrapper(nn.Module):
+class ComfyFluxForwardWrapper(nn.Module):
     def __init__(self, model: NunchakuFluxTransformer2dModel, config):
-        super(ComfyUIFluxForwardWrapper, self).__init__()
+        super(ComfyFluxForwardWrapper, self).__init__()
         self.model = model
         self.dtype = next(model.parameters()).dtype
         self.config = config
 
-    def forward(
-        self,
-        x,
-        timestep,
-        context,
-        y,
-        guidance,
-        control=None,
-        transformer_options={},
-        **kwargs,
-    ):
+    def forward(self, x, timestep, context, y, guidance, control=None, transformer_options={}, **kwargs):
         assert control is None  # for now
         bs, c, h, w = x.shape
         patch_size = self.config["patch_size"]
@@ -63,7 +53,7 @@ class ComfyUIFluxForwardWrapper(nn.Module):
         return out
 
 
-class SVDQuantFluxDiTLoader:
+class NunchakuFluxDiTLoader:
     @classmethod
     def INPUT_TYPES(s):
         prefixes = folder_paths.folder_names_and_paths["diffusion_models"][0]
@@ -81,10 +71,7 @@ class SVDQuantFluxDiTLoader:
         ngpus = torch.cuda.device_count()
         return {
             "required": {
-                "model_path": (
-                    model_paths,
-                    {"tooltip": "The SVDQuant quantized FLUX.1 models. It can be a huggingface path or a local path."},
-                ),
+                "model_path": (model_paths, {"tooltip": "The SVDQuant quantized FLUX.1 models."}),
                 "cpu_offload": (
                     ["auto", "enable", "disable"],
                     {
@@ -109,8 +96,8 @@ class SVDQuantFluxDiTLoader:
 
     RETURN_TYPES = ("MODEL",)
     FUNCTION = "load_model"
-    CATEGORY = "SVDQuant"
-    TITLE = "SVDQuant Flux DiT Loader"
+    CATEGORY = "Nunchaku"
+    TITLE = "Nunchaku Flux DiT Loader"
 
     def load_model(self, model_path: str, cpu_offload: str, device_id: int, **kwargs) -> tuple[FluxTransformer2DModel]:
         device = f"cuda:{device_id}"
@@ -152,42 +139,21 @@ class SVDQuantFluxDiTLoader:
             model_path, precision=precision, offload=cpu_offload_enabled
         )
         transformer = transformer.to(device)
-        dit_config = {
-            "image_model": "flux",
-            "patch_size": 2,
-            "out_channels": 16,
-            "vec_in_dim": 768,
-            "context_in_dim": 4096,
-            "hidden_size": 3072,
-            "mlp_ratio": 4.0,
-            "num_heads": 24,
-            "depth": 19,
-            "depth_single_blocks": 38,
-            "axes_dim": [16, 56, 56],
-            "theta": 10000,
-            "qkv_bias": True,
-            "guidance_embed": True,
-            "disable_unet_model_creation": True,
-        }
 
-        if "schnell" in model_path:
-            dit_config["guidance_embed"] = False
-            dit_config["in_channels"] = 16
-            model_config = FluxSchnell(dit_config)
-        elif "canny" in model_path or "depth" in model_path:
-            dit_config["in_channels"] = 32
-            model_config = Flux(dit_config)
-        elif "fill" in model_path:
-            dit_config["in_channels"] = 64
-            model_config = Flux(dit_config)
+        if os.path.exists(os.path.join(model_path, "comfy_config.json")):
+            config_path = os.path.join(model_path, "comfy_config.json")
         else:
-            dit_config["in_channels"] = 16
-            model_config = Flux(dit_config)
+            default_config_root = os.path.join(os.path.dirname(__file__), "configs")
+            config_name = os.path.basename(model_path).replace("svdq-int4-", "").replace("svdq-fp4-", "")
+            config_path = os.path.join(default_config_root, f"{config_name}.json")
+            assert os.path.exists(config_path), f"Config file not found: {config_path}"
 
+        comfy_config = json.load(open(config_path, "r"))
+        model_class_name = comfy_config["model_class"]
+        model_config = eval(model_class_name)(comfy_config["model_config"])
         model_config.set_inference_dtype(torch.bfloat16, None)
         model_config.custom_operations = None
-
         model = model_config.get_model({})
-        model.diffusion_model = ComfyUIFluxForwardWrapper(transformer, config=dit_config)
+        model.diffusion_model = ComfyFluxForwardWrapper(transformer, config=comfy_config["model_config"])
         model = comfy.model_patcher.ModelPatcher(model, device, device_id)
         return (model,)

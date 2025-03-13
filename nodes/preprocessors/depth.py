@@ -31,7 +31,7 @@ class FluxDepthPreprocessor:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "depth_preprocess"
-    CATEGORY = "SVDQuant"
+    CATEGORY = "Nunchaku"
     TITLE = "FLUX.1 Depth Preprocessor"
 
     def depth_preprocess(self, image, model_path):
