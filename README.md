@@ -5,7 +5,7 @@
 <a href="http://arxiv.org/abs/2411.05007"><b>Paper</b></a> | <a href="https://hanlab.mit.edu/projects/svdquant"><b>Website</b></a> | <a href="https://hanlab.mit.edu/blog/svdquant"><b>Blog</b></a> | <a href="https://svdquant.mit.edu"><b>Demo</b></a> | <a href="https://huggingface.co/collections/mit-han-lab/svdquant-67493c2c2e62a1fc6e93f45c"><b>HuggingFace</b></a> | <a href="https://modelscope.cn/collections/svdquant-468e8f780c2641"><b>ModelScope</b></a>
 </h3>
 
-[**Nunchaku**](https://github.com/mit-han-lab/deepcompressor) is an efficient inference engine designed for 4-bit diffusion models quantized by [SVDQuant](http://arxiv.org/abs/2411.05007). This repository is the ComfyUI node for nunchaku. Please check [DeepCompressor](https://github.com/mit-han-lab/deepcompressor) for the quantization library.
+This repository is the ComfyUI node for [**Nunchaku**](https://github.com/mit-han-lab/nunchaku), an efficient inference engine for 4-bit diffusion models quantized by [SVDQuant](http://arxiv.org/abs/2411.05007).  Please check [DeepCompressor](https://github.com/mit-han-lab/deepcompressor) for the quantization library.
 
 Check [here](https://github.com/mit-han-lab/nunchaku/issues/149) to join our user groups on [**Slack**](https://join.slack.com/t/nunchaku/shared_invite/zt-3170agzoz-NgZzWaTrEj~n2KEV3Hpl5Q) and [**WeChat**](https://github.com/mit-han-lab/nunchaku/blob/main/assets/wechat.jpg?raw=true) for discussions! If you have any questions, encounter issues, or are interested in contributing to the codebase, feel free to share your thoughts there!
 
@@ -16,7 +16,7 @@ Check [here](https://github.com/mit-han-lab/nunchaku/issues/149) to join our use
 
 Please first install `nunchaku` following the instructions in [README.md](https://github.com/mit-han-lab/nunchaku?tab=readme-ov-file#installation). 
 
-**[Optional]** You need to install `image_gen_aux` if you are using our depth-to-image workflow:
+**[Optional]** You need to install `image_gen_aux` if you use `FluxDepthPreprocessor` node:
 
 ```shell
 pip install git+https://github.com/asomoza/image_gen_aux.git
