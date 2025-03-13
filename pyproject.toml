@@ -13,4 +13,4 @@ Repository = "https://github.com/mit-han-lab/ComfyUI-nunchaku"
 [tool.comfy]
 PublisherId = "lmxyy1999"
 DisplayName = "Nunchaku"
-#Icon = "https://raw.githubusercontent.com/mit-han-lab/nunchaku/bfd9aa3ae84f51a26414f1600d725a0098472820/assets/logo.svg"
+Icon = "https://raw.githubusercontent.com/mit-han-lab/nunchaku/96615bd93a1f0d2cf98039fddecfec43ce34cc96/assets/nunchaku.svg"
