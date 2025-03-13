@@ -148,6 +148,7 @@ class NunchakuFluxDiTLoader:
             config_path = os.path.join(default_config_root, f"{config_name}.json")
             assert os.path.exists(config_path), f"Config file not found: {config_path}"
 
+        print(f"Loading configuration from {config_path}")
         comfy_config = json.load(open(config_path, "r"))
         model_class_name = comfy_config["model_class"]
         model_config = eval(model_class_name)(comfy_config["model_config"])
