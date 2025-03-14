@@ -183,7 +183,7 @@
         "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        482487939694684,
+        479246542740385,
         "randomize",
         20,
         1,
@@ -428,7 +428,7 @@
         132.3040771484375
       ],
       "flags": {},
-      "order": 2,
+      "order": 1,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -440,41 +440,6 @@
       ],
       "color": "#432",
       "bgcolor": "#653"
-    },
-    {
-      "id": 45,
-      "type": "SVDQuantFluxDiTLoader",
-      "pos": [
-        936.3029174804688,
-        -113.06819915771484
-      ],
-      "size": [
-        315,
-        106
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "localized_name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            102
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SVDQuantFluxDiTLoader"
-      },
-      "widgets_values": [
-        "mit-han-lab/svdq-int4-flux.1-fill-dev",
-        "disable",
-        0
-      ]
     },
     {
       "id": 17,
@@ -490,7 +455,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 4,
+      "order": 2,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -535,7 +500,7 @@
         58
       ],
       "flags": {},
-      "order": 1,
+      "order": 3,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -585,6 +550,41 @@
       },
       "widgets_values": [
         "ComfyUI"
+      ]
+    },
+    {
+      "id": 45,
+      "type": "SVDQuantFluxDiTLoader",
+      "pos": [
+        936.3029174804688,
+        -113.06819915771484
+      ],
+      "size": [
+        315,
+        106
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "localized_name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            102
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SVDQuantFluxDiTLoader"
+      },
+      "widgets_values": [
+        "svdq-int4-flux.1-fill-dev",
+        "disable",
+        0
       ]
     }
   ],
@@ -730,10 +730,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 1.7985878990921451,
+      "scale": 1.01525597994771,
       "offset": [
-        -287.8887097712823,
-        208.1745856210748
+        -134.7173442538892,
+        224.9285090893139
       ]
     },
     "node_versions": {

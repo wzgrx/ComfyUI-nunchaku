@@ -119,11 +119,10 @@ class NunchakuFluxLoraLoader:
                     if save_converted_lora == "enable":
                         dirname = os.path.dirname(lora_path)
                         basename = os.path.basename(lora_path)
-                        if "int4" in base_model_path:
-                            precision = "int4"
-                        else:
-                            assert "fp4" in base_model_path
+                        if "fp4" in base_model_path:
                             precision = "fp4"
+                        else:
+                            precision = "int4"
                         converted_name = f"svdq-{precision}-{basename}"
                         lora_converted_path = os.path.join(dirname, converted_name)
                         if not os.path.exists(lora_converted_path):
