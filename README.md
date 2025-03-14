@@ -118,7 +118,9 @@ comfy node registry-install nunchaku  # Install Nunchaku
     huggingface-cli download mit-han-lab/svdq-int4-flux.1-dev --local-dir models/diffusion_models/svdq-int4-flux.1-dev
     ```
 
-    After downloading, set `model_path` to the corresponding folder name.
+    After downloading, set `model_path` to the corresponding folder name. 
+
+    **Note: If you rename the model folder, ensure that `comfy_config.json` is present in the folder. You can find this file in our corresponding repositories on [Hugging Face](https://huggingface.co/collections/mit-han-lab/svdquant-67493c2c2e62a1fc6e93f45c) or [ModelScope](https://modelscope.cn/collections/svdquant-468e8f780c2641).**
 
   * `cpu_offload`: Enables CPU offloading for the transformer model. While this reduces GPU memory usage, it may slow down inference.
 
