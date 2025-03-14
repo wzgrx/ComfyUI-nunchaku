@@ -6,8 +6,8 @@ import folder_paths
 import torch
 from comfy.ldm.common_dit import pad_to_patch_size
 from comfy.supported_models import Flux, FluxSchnell
-from diffusers import FluxTransformer2DModel
-from einops import rearrange, repeat
+from diffusers import FluxPipeline, FluxTransformer2DModel
+from einops import rearrange
 from nunchaku import NunchakuFluxTransformer2dModel
 from torch import nn
 
@@ -29,15 +29,7 @@ class ComfyFluxForwardWrapper(nn.Module):
 
         h_len = (h + (patch_size // 2)) // patch_size
         w_len = (w + (patch_size // 2)) // patch_size
-        img_ids = torch.zeros((h_len, w_len, 3), device=x.device, dtype=x.dtype)
-        img_ids[:, :, 1] = img_ids[:, :, 1] + torch.linspace(
-            0, h_len - 1, steps=h_len, device=x.device, dtype=x.dtype
-        ).unsqueeze(1)
-        img_ids[:, :, 2] = img_ids[:, :, 2] + torch.linspace(
-            0, w_len - 1, steps=w_len, device=x.device, dtype=x.dtype
-        ).unsqueeze(0)
-        img_ids = repeat(img_ids, "h w c -> b (h w) c", b=bs)
-
+        img_ids = FluxPipeline._prepare_latent_image_ids(bs, h_len, w_len, x.device, x.dtype)
         txt_ids = torch.zeros((bs, context.shape[1], 3), device=x.device, dtype=x.dtype)
         out = self.model(
             hidden_states=img,
@@ -49,7 +41,8 @@ class ComfyFluxForwardWrapper(nn.Module):
             guidance=guidance if self.config["guidance_embed"] else None,
         ).sample
 
-        out = rearrange(out, "b (h w) (c ph pw) -> b c (h ph) (w pw)", h=h_len, w=w_len, ph=2, pw=2)[:, :, :h, :w]
+        out = rearrange(out, "b (h w) (c ph pw) -> b c (h ph) (w pw)", h=h_len, w=w_len, ph=patch_size, pw=patch_size)
+        out = out[:, :, :h, :w]
         return out
 
 
