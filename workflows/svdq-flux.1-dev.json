@@ -14,7 +14,7 @@
         58
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -37,7 +37,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "FluxGuidance"
+        "Node name for S&R": "FluxGuidance",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24"
       },
       "widgets_values": [
         3.5
@@ -68,46 +70,13 @@
         }
       ],
       "outputs": [],
-      "properties": {},
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24"
+      },
       "widgets_values": [
         "ComfyUI"
       ]
-    },
-    {
-      "id": 25,
-      "type": "RandomNoise",
-      "pos": [
-        819.1885986328125,
-        709.9674072265625
-      ],
-      "size": [
-        315,
-        82
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "NOISE",
-          "localized_name": "NOISE",
-          "type": "NOISE",
-          "shape": 3,
-          "links": [
-            37
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "RandomNoise"
-      },
-      "widgets_values": [
-        385675283593224,
-        "randomize"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
     },
     {
       "id": 16,
@@ -121,7 +90,7 @@
         58
       ],
       "flags": {},
-      "order": 1,
+      "order": 0,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -136,7 +105,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "KSamplerSelect"
+        "Node name for S&R": "KSamplerSelect",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24"
       },
       "widgets_values": [
         "euler"
@@ -154,7 +125,7 @@
         106
       ],
       "flags": {},
-      "order": 13,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -177,7 +148,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "BasicScheduler"
+        "Node name for S&R": "BasicScheduler",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24"
       },
       "widgets_values": [
         "simple",
@@ -197,7 +170,7 @@
         170
       ],
       "flags": {},
-      "order": 11,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -248,7 +221,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "ModelSamplingFlux"
+        "Node name for S&R": "ModelSamplingFlux",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24"
       },
       "widgets_values": [
         1.15,
@@ -297,7 +272,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "VAEDecode"
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24"
       },
       "widgets_values": []
     },
@@ -313,7 +290,7 @@
         46
       ],
       "flags": {},
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -344,7 +321,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "BasicGuider"
+        "Node name for S&R": "BasicGuider",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24"
       },
       "widgets_values": []
     },
@@ -360,7 +339,7 @@
         82
       ],
       "flags": {},
-      "order": 2,
+      "order": 1,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -400,7 +379,7 @@
         82
       ],
       "flags": {},
-      "order": 3,
+      "order": 2,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -481,97 +460,13 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "EmptySD3LatentImage"
+        "Node name for S&R": "EmptySD3LatentImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24"
       },
       "widgets_values": [
         1024,
         1024,
-        1
-      ]
-    },
-    {
-      "id": 6,
-      "type": "CLIPTextEncode",
-      "pos": [
-        217.73886108398438,
-        306.472412109375
-      ],
-      "size": [
-        422.84503173828125,
-        164.31304931640625
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "clip",
-          "localized_name": "clip",
-          "type": "CLIP",
-          "link": 118
-        }
-      ],
-      "outputs": [
-        {
-          "name": "CONDITIONING",
-          "localized_name": "CONDITIONING",
-          "type": "CONDITIONING",
-          "links": [
-            41
-          ],
-          "slot_index": 0
-        }
-      ],
-      "title": "CLIP Text Encode (Positive Prompt)",
-      "properties": {
-        "Node name for S&R": "CLIPTextEncode"
-      },
-      "widgets_values": [
-        "GHIBSKY style, cozy mountain cabin covered in snow, with smoke curling from the chimney and a warm, inviting light spilling through the windows"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 41,
-      "type": "SVDQuantFluxLoraLoader",
-      "pos": [
-        308.1814880371094,
-        1080.8433837890625
-      ],
-      "size": [
-        484.5584716796875,
-        146.848388671875
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "localized_name": "model",
-          "type": "MODEL",
-          "link": 122
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "localized_name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            123
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SVDQuantFluxLoraLoader"
-      },
-      "widgets_values": [
-        "aleksa-codes/flux-ghibsky-illustration/lora.safetensors",
-        "auto",
-        "mit-han-lab/svdq-int4-flux.1-dev",
         1
       ]
     },
@@ -587,7 +482,7 @@
         60.429901123046875
       ],
       "flags": {},
-      "order": 4,
+      "order": 3,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -603,47 +498,12 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "VAELoader"
+        "Node name for S&R": "VAELoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24"
       },
       "widgets_values": [
         "ae.safetensors"
-      ]
-    },
-    {
-      "id": 39,
-      "type": "SVDQuantTextEncoderLoader",
-      "pos": [
-        375.7381591796875,
-        652.5384521484375
-      ],
-      "size": [
-        352.79998779296875,
-        178
-      ],
-      "flags": {},
-      "order": 5,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "CLIP",
-          "localized_name": "CLIP",
-          "type": "CLIP",
-          "links": [
-            118
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SVDQuantTextEncoderLoader"
-      },
-      "widgets_values": [
-        "flux",
-        "t5xxl_fp16.safetensors",
-        "clip_l.safetensors",
-        512,
-        "BF16",
-        "mit-han-lab/svdq-flux.1-t5"
       ]
     },
     {
@@ -717,9 +577,94 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "SamplerCustomAdvanced"
+        "Node name for S&R": "SamplerCustomAdvanced",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24"
       },
       "widgets_values": []
+    },
+    {
+      "id": 25,
+      "type": "RandomNoise",
+      "pos": [
+        819.1885986328125,
+        709.9674072265625
+      ],
+      "size": [
+        315,
+        82
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "NOISE",
+          "localized_name": "NOISE",
+          "type": "NOISE",
+          "shape": 3,
+          "links": [
+            37
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RandomNoise",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24"
+      },
+      "widgets_values": [
+        952493636713812,
+        "randomize"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+        217.73886108398438,
+        306.472412109375
+      ],
+      "size": [
+        422.84503173828125,
+        164.31304931640625
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "localized_name": "clip",
+          "type": "CLIP",
+          "link": 118
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "localized_name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            41
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "CLIP Text Encode (Positive Prompt)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24"
+      },
+      "widgets_values": [
+        "A photo of an anime model wearing a trendy oversized sweater and denim pants, sitting on a swing in a park with hands gripping the chains. The golden hour sunlight filters through the trees, creating a magical atmosphere. Fashion photography, high resolution, 35mm lens, f/2.8, natural lighting, global illumination. --ar 85:128 --v 6.0 --style raw."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
     },
     {
       "id": 38,
@@ -733,7 +678,7 @@
         106
       ],
       "flags": {},
-      "order": 6,
+      "order": 5,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -748,12 +693,99 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "SVDQuantFluxDiTLoader"
+        "Node name for S&R": "SVDQuantFluxDiTLoader",
+        "cnr_id": "svdquant",
+        "ver": "0.1.5"
       },
       "widgets_values": [
-        "mit-han-lab/svdq-int4-flux.1-dev",
+        "svdq-int4-flux.1-dev",
         "disable",
         0
+      ]
+    },
+    {
+      "id": 41,
+      "type": "SVDQuantFluxLoraLoader",
+      "pos": [
+        308.1814880371094,
+        1080.8433837890625
+      ],
+      "size": [
+        484.5584716796875,
+        154
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "localized_name": "model",
+          "type": "MODEL",
+          "link": 122
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "localized_name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            123
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SVDQuantFluxLoraLoader",
+        "cnr_id": "svdquant",
+        "ver": "0.1.5"
+      },
+      "widgets_values": [
+        "comfyui-real_anime.safetensors",
+        "auto",
+        "svdq-int4-flux.1-dev",
+        1,
+        "disable"
+      ]
+    },
+    {
+      "id": 39,
+      "type": "SVDQuantTextEncoderLoader",
+      "pos": [
+        375.7381591796875,
+        652.5384521484375
+      ],
+      "size": [
+        352.79998779296875,
+        178
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "localized_name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            118
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SVDQuantTextEncoderLoader",
+        "cnr_id": "svdquant",
+        "ver": "0.1.5"
+      },
+      "widgets_values": [
+        "flux",
+        "t5xxl_fp16.safetensors",
+        "clip_l.safetensors",
+        512,
+        "disable",
+        "svdq-flux.1-t5"
       ]
     }
   ],
@@ -915,10 +947,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 1.0152559799477106,
+      "scale": 1.3513057093103962,
       "offset": [
-        1093.678904911345,
-        404.94781362261836
+        63.22610807199123,
+        -384.99177989437885
       ]
     },
     "groupNodes": {

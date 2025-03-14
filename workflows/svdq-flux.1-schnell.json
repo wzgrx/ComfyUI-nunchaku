@@ -352,15 +352,15 @@
       ]
     },
     {
-      "id": 25,
-      "type": "RandomNoise",
+      "id": 10,
+      "type": "VAELoader",
       "pos": [
-        479.2310485839844,
-        589.0120239257812
+        874.65625,
+        480.88372802734375
       ],
       "size": [
         315,
-        82
+        58
       ],
       "flags": {},
       "order": 2,
@@ -368,24 +368,22 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "NOISE",
-          "localized_name": "NOISE",
-          "type": "NOISE",
+          "name": "VAE",
+          "localized_name": "VAE",
+          "type": "VAE",
           "shape": 3,
           "links": [
-            37
-          ]
+            12
+          ],
+          "slot_index": 0
         }
       ],
       "properties": {
-        "Node name for S&R": "RandomNoise"
+        "Node name for S&R": "VAELoader"
       },
       "widgets_values": [
-        45,
-        "fixed"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
+        "ae.safetensors"
+      ]
     },
     {
       "id": 29,
@@ -427,9 +425,45 @@
         "t5xxl_fp16.safetensors",
         "clip_l.safetensors",
         512,
-        "BF16",
-        "mit-han-lab/svdq-flux.1-t5"
+        "disable",
+        "svdq-flux.1-t5"
       ]
+    },
+    {
+      "id": 25,
+      "type": "RandomNoise",
+      "pos": [
+        479.2310485839844,
+        589.0120239257812
+      ],
+      "size": [
+        315,
+        82
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "NOISE",
+          "localized_name": "NOISE",
+          "type": "NOISE",
+          "shape": 3,
+          "links": [
+            37
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RandomNoise"
+      },
+      "widgets_values": [
+        1037743483120774,
+        "fixed"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
     },
     {
       "id": 28,
@@ -443,7 +477,7 @@
         106
       ],
       "flags": {},
-      "order": 4,
+      "order": 5,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -462,43 +496,9 @@
         "Node name for S&R": "SVDQuantFluxDiTLoader"
       },
       "widgets_values": [
-        "mit-han-lab/svdq-int4-flux.1-schnell",
+        "svdq-int4-shuttle-jaguar",
         "disable",
         0
-      ]
-    },
-    {
-      "id": 10,
-      "type": "VAELoader",
-      "pos": [
-        874.65625,
-        480.88372802734375
-      ],
-      "size": [
-        315,
-        58
-      ],
-      "flags": {},
-      "order": 5,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "VAE",
-          "localized_name": "VAE",
-          "type": "VAE",
-          "shape": 3,
-          "links": [
-            12
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VAELoader"
-      },
-      "widgets_values": [
-        "ae.safetensors"
       ]
     }
   ],
@@ -604,10 +604,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 1.1167815779424761,
+      "scale": 1.0152559799477088,
       "offset": [
-        874.5548427683093,
-        429.12540214017235
+        554.7743741360072,
+        -269.8342312109306
       ]
     },
     "node_versions": {

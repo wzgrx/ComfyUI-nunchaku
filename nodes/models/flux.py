@@ -30,7 +30,7 @@ class ComfyFluxForwardWrapper(nn.Module):
         h_len = (h + (patch_size // 2)) // patch_size
         w_len = (w + (patch_size // 2)) // patch_size
         img_ids = FluxPipeline._prepare_latent_image_ids(bs, h_len, w_len, x.device, x.dtype)
-        txt_ids = torch.zeros((bs, context.shape[1], 3), device=x.device, dtype=x.dtype)
+        txt_ids = torch.zeros((context.shape[1], 3), device=x.device, dtype=x.dtype)
         out = self.model(
             hidden_states=img,
             encoder_hidden_states=context,

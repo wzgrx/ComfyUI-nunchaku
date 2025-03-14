@@ -1,5 +1,5 @@
 {
-  "last_node_id": 45,
+  "last_node_id": 46,
   "last_link_id": 88,
   "nodes": [
     {
@@ -189,7 +189,7 @@
         "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        69796511068157,
+        543050995112762,
         "randomize",
         20,
         1,
@@ -508,47 +508,6 @@
       "widgets_values": []
     },
     {
-      "id": 45,
-      "type": "SVDQuantDepthPreprocessor",
-      "pos": [
-        620.8667602539062,
-        445.8307189941406
-      ],
-      "size": [
-        315,
-        58
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "localized_name": "image",
-          "type": "IMAGE",
-          "link": 86
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "localized_name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            87,
-            88
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "FluxDepthPreprocessor"
-      },
-      "widgets_values": [
-        "LiheYoung/depth-anything-large-hf"
-      ]
-    },
-    {
       "id": 17,
       "type": "LoadImage",
       "pos": [
@@ -622,9 +581,50 @@
         "Node name for S&R": "SVDQuantFluxDiTLoader"
       },
       "widgets_values": [
-        "mit-han-lab/svdq-int4-flux.1-depth-dev",
-        "disable",
+        "svdq-int4-flux.1-depth-dev",
+        "auto",
         0
+      ]
+    },
+    {
+      "id": 45,
+      "type": "SVDQuantDepthPreprocessor",
+      "pos": [
+        620.8667602539062,
+        445.8307189941406
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "localized_name": "image",
+          "type": "IMAGE",
+          "link": 86
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "localized_name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            87,
+            88
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxDepthPreprocessor"
+      },
+      "widgets_values": [
+        "depth-anything-large-hf"
       ]
     }
   ],
@@ -772,8 +772,8 @@
     "ds": {
       "scale": 0.8140274938684042,
       "offset": [
-        1795.999020278545,
-        750.1636967541119
+        424.42162591000846,
+        -99.3661466762832
       ]
     },
     "node_versions": {
