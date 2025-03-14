@@ -55,7 +55,7 @@ class NunchakuTextEncoderLoader:
                     if not folder.startswith(".") and os.path.isdir(os.path.join(prefix, folder))
                 ]
                 local_folders.update(local_folders_)
-        model_paths = sorted(list(local_folders))
+        model_paths = ["none"] + sorted(list(local_folders))
         return {
             "required": {
                 "model_type": (["flux"],),
@@ -103,6 +103,7 @@ class NunchakuTextEncoderLoader:
             clip.tokenizer.t5xxl.min_length = t5_min_length
 
         if use_4bit_t5 == "enable":
+            assert int4_model != "none", "Please select a 4-bit T5 model."
             transformer = clip.cond_stage_model.t5xxl.transformer
             param = next(transformer.parameters())
             dtype = param.dtype

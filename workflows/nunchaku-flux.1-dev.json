@@ -785,7 +785,7 @@
         "clip_l.safetensors",
         512,
         "disable",
-        "svdq-flux.1-t5"
+        "none"
       ]
     }
   ],
