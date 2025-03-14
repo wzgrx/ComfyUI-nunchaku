@@ -144,7 +144,12 @@ class NunchakuFluxDiTLoader:
         print(f"Loading configuration from {config_path}")
         comfy_config = json.load(open(config_path, "r"))
         model_class_name = comfy_config["model_class"]
-        model_config = eval(model_class_name)(comfy_config["model_config"])
+        if model_class_name == "FluxSchnell":
+            model_class = FluxSchnell
+        else:
+            assert model_class_name == "Flux", f"Unknown model class {model_class_name}."
+            model_class = Flux
+        model_config = model_class(comfy_config["model_config"])
         model_config.set_inference_dtype(torch.bfloat16, None)
         model_config.custom_operations = None
         model = model_config.get_model({})
