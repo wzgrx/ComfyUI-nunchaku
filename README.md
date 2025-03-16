@@ -29,8 +29,7 @@ You can easily use [`comfy-cli`](https://github.com/Comfy-Org/comfy-cli) to run 
 ```shell
 pip install comfy-cli  # Install ComfyUI CLI  
 comfy install          # Install ComfyUI  
-comfy node registry-install nunchaku  # Install Nunchaku  
-
+comfy node registry-install nunchaku_nodes  # Install Nunchaku  
 ```
 
 ### ComfyUI-Manager
