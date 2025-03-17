@@ -88,7 +88,7 @@ comfy node registry-install nunchaku_nodes  # Install Nunchaku
        mkdir -p user/default/workflows
        
        # Copy workflow configurations
-       cp custom_nodes/ComfyUI-nunchaku/workflows/* user/default/workflows/
+       cp custom_nodes/nunchaku_nodes/workflows/* user/default/workflows/
        ```
 
      * Install any missing nodes (e.g., `comfyui-inpainteasy`) by following [this tutorial](https://github.com/ltdrdata/ComfyUI-Manager?tab=readme-ov-file#support-of-missing-nodes-installation).
