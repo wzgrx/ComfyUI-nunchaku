@@ -2,9 +2,9 @@ import logging
 import os
 import tempfile
 
-import folder_paths
 from safetensors.torch import save_file
 
+import folder_paths
 from nunchaku.lora.flux import convert_to_nunchaku_flux_lowrank_dict, is_nunchaku_format, to_diffusers
 
 logging.basicConfig(level=logging.INFO)

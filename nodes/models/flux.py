@@ -1,15 +1,16 @@
 import json
 import os
 
-import comfy.model_patcher
-import folder_paths
 import torch
-from comfy.ldm.common_dit import pad_to_patch_size
-from comfy.supported_models import Flux, FluxSchnell
 from diffusers import FluxPipeline, FluxTransformer2DModel
 from einops import rearrange
-from nunchaku import NunchakuFluxTransformer2dModel
 from torch import nn
+
+import comfy.model_patcher
+import folder_paths
+from comfy.ldm.common_dit import pad_to_patch_size
+from comfy.supported_models import Flux, FluxSchnell
+from nunchaku import NunchakuFluxTransformer2dModel
 
 
 class ComfyFluxForwardWrapper(nn.Module):
