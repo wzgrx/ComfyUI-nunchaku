@@ -1,11 +1,8 @@
 import logging
 import os
-import tempfile
-
-from safetensors.torch import save_file
 
 import folder_paths
-from nunchaku.lora.flux import convert_to_nunchaku_flux_lowrank_dict, is_nunchaku_format, to_diffusers
+from nunchaku.lora.flux import is_nunchaku_format, to_nunchaku
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("NunchakuFluxLoraLoader")
@@ -95,38 +92,27 @@ class NunchakuFluxLoraLoader:
                 except FileNotFoundError:
                     lora_path = lora_name
                 if not is_nunchaku_format(lora_path):
-                    input_lora = to_diffusers(lora_path)
                     prefix = os.path.join(folder_paths.models_dir, "diffusion_models")
                     base_model_path = os.path.join(prefix, base_model_name, "transformer_blocks.safetensors")
                     if not os.path.exists(base_model_path):
                         # download from huggingface
                         base_model_path = os.path.join(base_model_name, "transformer_blocks.safetensors")
-                    state_dict = convert_to_nunchaku_flux_lowrank_dict(base_model_path, input_lora)
 
+                    output_path = None
                     if save_converted_lora == "enable":
                         dirname = os.path.dirname(lora_path)
                         basename = os.path.basename(lora_path)
                         precision = "fp4" if "fp4" in base_model_name else "int4"
                         converted_name = f"svdq-{precision}-{basename}"
-                        lora_converted_path = os.path.join(dirname, converted_name)
-                        if not os.path.exists(lora_converted_path):
-                            save_file(state_dict, lora_converted_path)
-                            logger.info(f"Saved converted LoRA to: {lora_converted_path}")
-                        else:
-                            logger.info(f"Converted LoRA already exists at: {lora_converted_path}")
-                        model.model.diffusion_model.model.update_lora_params(lora_converted_path)
-                    else:
-                        with tempfile.NamedTemporaryFile(suffix=".safetensors", delete=False) as tmp_file:
-                            tmp_file_path = tmp_file.name
-                            tmp_file.close()
-                            try:
-                                save_file(state_dict, tmp_file_path)
-                                model.model.diffusion_model.model.update_lora_params(tmp_file_path)
-                            finally:
-                                os.remove(tmp_file_path)
+                        output_path = os.path.join(dirname, converted_name)
+
+                    state_dict = to_nunchaku(lora_path, base_model_path, output_path=output_path)
+                    model.model.diffusion_model.model.update_lora_params(state_dict)
                 else:
                     model.model.diffusion_model.model.update_lora_params(lora_path)
                 model.model.diffusion_model.model.set_lora_strength(lora_strength)
             self.cur_lora_name = lora_name
 
         return (model,)
+
+    # TODO: add lora to the text encoder
