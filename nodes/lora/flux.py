@@ -3,8 +3,9 @@ import os
 import tempfile
 
 import folder_paths
-from nunchaku.lora.flux import comfyui2diffusers, convert_to_nunchaku_flux_lowrank_dict, detect_format, xlab2diffusers
 from safetensors.torch import save_file
+
+from nunchaku.lora.flux import convert_to_nunchaku_flux_lowrank_dict, is_nunchaku_format, to_diffusers
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("NunchakuFluxLoraLoader")
@@ -35,10 +36,6 @@ class NunchakuFluxLoraLoader:
             "required": {
                 "model": ("MODEL", {"tooltip": "The diffusion model the LoRA will be applied to."}),
                 "lora_name": (lora_name_list, {"tooltip": "The name of the LoRA."}),
-                "lora_format": (
-                    ["auto", "comfyui", "diffusers", "svdquant", "xlab"],
-                    {"tooltip": "The format of the LoRA."},
-                ),
                 "base_model_name": (
                     base_model_paths,
                     {
@@ -80,7 +77,6 @@ class NunchakuFluxLoraLoader:
         self,
         model,
         lora_name: str,
-        lora_format: str,
         base_model_name: str,
         lora_strength: float,
         save_converted_lora: str,
@@ -98,17 +94,8 @@ class NunchakuFluxLoraLoader:
                     lora_path = folder_paths.get_full_path_or_raise("loras", lora_name)
                 except FileNotFoundError:
                     lora_path = lora_name
-                if lora_format == "auto":
-                    lora_format = detect_format(lora_path)
-                if lora_format != "svdquant":
-                    if lora_format == "comfyui":
-                        input_lora = comfyui2diffusers(lora_path)
-                    elif lora_format == "xlab":
-                        input_lora = xlab2diffusers(lora_path)
-                    elif lora_format == "diffusers":
-                        input_lora = lora_path
-                    else:
-                        raise ValueError(f"Invalid LoRA format {lora_format}.")
+                if not is_nunchaku_format(lora_path):
+                    input_lora = to_diffusers(lora_path)
                     prefix = os.path.join(folder_paths.models_dir, "diffusion_models")
                     base_model_path = os.path.join(prefix, base_model_name, "transformer_blocks.safetensors")
                     if not os.path.exists(base_model_path):
@@ -119,10 +106,7 @@ class NunchakuFluxLoraLoader:
                     if save_converted_lora == "enable":
                         dirname = os.path.dirname(lora_path)
                         basename = os.path.basename(lora_path)
-                        if "fp4" in base_model_path:
-                            precision = "fp4"
-                        else:
-                            precision = "int4"
+                        precision = "fp4" if "fp4" in base_model_name else "int4"
                         converted_name = f"svdq-{precision}-{basename}"
                         lora_converted_path = os.path.join(dirname, converted_name)
                         if not os.path.exists(lora_converted_path):
