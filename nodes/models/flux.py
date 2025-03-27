@@ -11,17 +11,24 @@ import folder_paths
 from comfy.ldm.common_dit import pad_to_patch_size
 from comfy.supported_models import Flux, FluxSchnell
 from nunchaku import NunchakuFluxTransformer2dModel
+from nunchaku.lora.flux.compose import compose_lora
+from nunchaku.utils import load_state_dict_in_safetensors
 
 
-class ComfyFluxForwardWrapper(nn.Module):
+class ComfyFluxWrapper(nn.Module):
     def __init__(self, model: NunchakuFluxTransformer2dModel, config):
-        super(ComfyFluxForwardWrapper, self).__init__()
+        super(ComfyFluxWrapper, self).__init__()
         self.model = model
         self.dtype = next(model.parameters()).dtype
         self.config = config
+        self.loras = []
 
     def forward(self, x, timestep, context, y, guidance, control=None, transformer_options={}, **kwargs):
         assert control is None  # for now
+
+        model = self.model
+        assert isinstance(model, NunchakuFluxTransformer2dModel)
+
         bs, c, h, w = x.shape
         patch_size = self.config["patch_size"]
         x = pad_to_patch_size(x, (patch_size, patch_size))
@@ -32,7 +39,39 @@ class ComfyFluxForwardWrapper(nn.Module):
         w_len = (w + (patch_size // 2)) // patch_size
         img_ids = FluxPipeline._prepare_latent_image_ids(bs, h_len, w_len, x.device, x.dtype)
         txt_ids = torch.zeros((context.shape[1], 3), device=x.device, dtype=x.dtype)
-        out = self.model(
+
+        # load and compose lora
+        if self.loras != model.comfy_lora_meta_list:
+            lora_to_be_composed = []
+            for _ in range(max(0, len(model.comfy_lora_meta_list) - len(self.loras))):
+                model.comfy_lora_meta_list.pop()
+                model.comfy_lora_sd_list.pop()
+            for i in range(len(self.loras)):
+                meta = self.loras[i]
+                if i >= len(model.comfy_lora_meta_list):
+                    sd = load_state_dict_in_safetensors(meta[0])
+                    model.comfy_lora_meta_list.append(meta)
+                    model.comfy_lora_sd_list.append(sd)
+                elif model.comfy_lora_meta_list[i] != meta:
+                    if meta[0] != model.comfy_lora_meta_list[i][0]:
+                        sd = load_state_dict_in_safetensors(meta[0])
+                        model.comfy_lora_sd_list[i] = sd
+                    model.comfy_lora_meta_list[i] = meta
+                lora_to_be_composed.append((model.comfy_lora_sd_list[i], meta[1]))
+
+            composed_lora = compose_lora(lora_to_be_composed)
+
+            if len(composed_lora) == 0:
+                model.reset_lora()
+            else:
+                if "x_embedder.lora_A.weight" in composed_lora:
+                    new_in_channels = composed_lora["x_embedder.lora_A.weight"].shape[1]
+                    current_in_channels = model.x_embedder.in_features
+                    if new_in_channels < current_in_channels:
+                        model.reset_x_embedder()
+                model.update_lora_params(composed_lora)
+
+        out = model(
             hidden_states=img,
             encoder_hidden_states=context,
             pooled_projections=y,
@@ -126,13 +165,7 @@ class NunchakuFluxDiTLoader:
             cpu_offload_enabled = False
             print("Disable CPU offload")
 
-        capability = torch.cuda.get_device_capability(0)
-        sm = f"{capability[0]}{capability[1]}"
-        precision = "fp4" if sm == "120" else "int4"
-        transformer = NunchakuFluxTransformer2dModel.from_pretrained(
-            model_path, precision=precision, offload=cpu_offload_enabled
-        )
-        transformer = transformer.to(device)
+        transformer = NunchakuFluxTransformer2dModel.from_pretrained(model_path, offload=cpu_offload_enabled).to(device)
 
         if os.path.exists(os.path.join(model_path, "comfy_config.json")):
             config_path = os.path.join(model_path, "comfy_config.json")
@@ -154,6 +187,6 @@ class NunchakuFluxDiTLoader:
         model_config.set_inference_dtype(torch.bfloat16, None)
         model_config.custom_operations = None
         model = model_config.get_model({})
-        model.diffusion_model = ComfyFluxForwardWrapper(transformer, config=comfy_config["model_config"])
+        model.diffusion_model = ComfyFluxWrapper(transformer, config=comfy_config["model_config"])
         model = comfy.model_patcher.ModelPatcher(model, device, device_id)
         return (model,)
