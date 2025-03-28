@@ -57,7 +57,7 @@ class ComfyFluxWrapper(nn.Module):
                         sd = load_state_dict_in_safetensors(meta[0])
                         model.comfy_lora_sd_list[i] = sd
                     model.comfy_lora_meta_list[i] = meta
-                lora_to_be_composed.append((model.comfy_lora_sd_list[i], meta[1]))
+                lora_to_be_composed.append(({k: v for k, v in model.comfy_lora_sd_list[i].items()}, meta[1]))
 
             composed_lora = compose_lora(lora_to_be_composed)
 
@@ -70,7 +70,6 @@ class ComfyFluxWrapper(nn.Module):
                     if new_in_channels < current_in_channels:
                         model.reset_x_embedder()
                 model.update_lora_params(composed_lora)
-
         out = model(
             hidden_states=img,
             encoder_hidden_states=context,

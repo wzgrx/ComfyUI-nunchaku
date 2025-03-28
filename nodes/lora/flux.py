@@ -2,6 +2,7 @@ import copy
 import logging
 
 import folder_paths
+from nunchaku.lora.flux import to_diffusers
 from ..models.flux import ComfyFluxWrapper
 
 logging.basicConfig(level=logging.INFO)
@@ -56,5 +57,18 @@ class NunchakuFluxLoraLoader:
         model_wrapper.model = transformer
         ret_model_wrapper.model = transformer
 
-        ret_model_wrapper.loras.append((folder_paths.get_full_path_or_raise("loras", lora_name), lora_strength))
+        lora_path = folder_paths.get_full_path_or_raise("loras", lora_name)
+        ret_model_wrapper.loras.append((lora_path, lora_strength))
+
+        sd = to_diffusers(lora_path)
+        if "transformer.x_embedder.lora_A.weight" in sd:
+            new_in_channels = sd["transformer.x_embedder.lora_A.weight"].shape[1]
+            assert new_in_channels % 4 == 0
+            new_in_channels = new_in_channels // 4
+
+            old_in_channels = ret_model.model.model_config.unet_config["in_channels"]
+            assert old_in_channels <= new_in_channels
+            if old_in_channels < new_in_channels:
+                ret_model.model.model_config.unet_config["in_channels"] = new_in_channels
+
         return (ret_model,)
