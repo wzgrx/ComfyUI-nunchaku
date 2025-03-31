@@ -1,5 +1,6 @@
 import json
 import os
+from contextlib import nullcontext
 
 import torch
 from diffusers import FluxPipeline, FluxTransformer2DModel
@@ -11,6 +12,8 @@ import folder_paths
 from comfy.ldm.common_dit import pad_to_patch_size
 from comfy.supported_models import Flux, FluxSchnell
 from nunchaku import NunchakuFluxTransformer2dModel
+from nunchaku.caching.diffusers_adapters.flux import apply_cache_on_transformer
+from nunchaku.caching.utils import cache_context, create_cache_context
 from nunchaku.lora.flux.compose import compose_lora
 from nunchaku.utils import load_state_dict_in_safetensors
 
@@ -22,6 +25,9 @@ class ComfyFluxWrapper(nn.Module):
         self.dtype = next(model.parameters()).dtype
         self.config = config
         self.loras = []
+
+        self._prev_timestep = None  # for first-block cache
+        self._cache_context = None
 
     def forward(self, x, timestep, context, y, guidance, control=None, transformer_options={}, **kwargs):
         assert control is None  # for now
@@ -70,18 +76,29 @@ class ComfyFluxWrapper(nn.Module):
                     if new_in_channels < current_in_channels:
                         model.reset_x_embedder()
                 model.update_lora_params(composed_lora)
-        out = model(
-            hidden_states=img,
-            encoder_hidden_states=context,
-            pooled_projections=y,
-            timestep=timestep,
-            img_ids=img_ids,
-            txt_ids=txt_ids,
-            guidance=guidance if self.config["guidance_embed"] else None,
-        ).sample
+
+        if getattr(model, "_is_cached", False):
+            if self._prev_timestep is None or self._prev_timestep < timestep:
+                self._cache_context = create_cache_context()
+            context = cache_context(self._cache_context)
+        else:
+            context = nullcontext()
+
+        with context:
+            out = model(
+                hidden_states=img,
+                encoder_hidden_states=context,
+                pooled_projections=y,
+                timestep=timestep,
+                img_ids=img_ids,
+                txt_ids=txt_ids,
+                guidance=guidance if self.config["guidance_embed"] else None,
+            ).sample
 
         out = rearrange(out, "b (h w) (c ph pw) -> b c (h ph) (w pw)", h=h_len, w=w_len, ph=patch_size, pw=patch_size)
         out = out[:, :, :h, :w]
+
+        self._prev_timestep = timestep
         return out
 
 
@@ -104,6 +121,18 @@ class NunchakuFluxDiTLoader:
         return {
             "required": {
                 "model_path": (model_paths, {"tooltip": "The SVDQuant quantized FLUX.1 models."}),
+                "cache_threshold": (
+                    "FLOAT",
+                    {
+                        "default": 1.0,
+                        "min": 0,
+                        "max": 1,
+                        "step": 0.001,
+                        "tooltip": "Adjusts the caching tolerance like `residual_diff_threshold` in WaveSpeed. "
+                        "Increasing the value enhances speed at the cost of quality. "
+                        "A typical setting is 0.12. Setting it to 0 disables the effect.",
+                    },
+                ),
                 "cpu_offload": (
                     ["auto", "enable", "disable"],
                     {
@@ -129,9 +158,11 @@ class NunchakuFluxDiTLoader:
     RETURN_TYPES = ("MODEL",)
     FUNCTION = "load_model"
     CATEGORY = "Nunchaku"
-    TITLE = "Nunchaku Flux DiT Loader"
+    TITLE = "Nunchaku FLUX DiT Loader"
 
-    def load_model(self, model_path: str, cpu_offload: str, device_id: int, **kwargs) -> tuple[FluxTransformer2DModel]:
+    def load_model(
+        self, model_path: str, cache_threshold: float, cpu_offload: str, device_id: int, **kwargs
+    ) -> tuple[FluxTransformer2DModel]:
         device = f"cuda:{device_id}"
         prefixes = folder_paths.folder_names_and_paths["diffusion_models"][0]
         for prefix in prefixes:
@@ -165,6 +196,8 @@ class NunchakuFluxDiTLoader:
             print("Disable CPU offload")
 
         transformer = NunchakuFluxTransformer2dModel.from_pretrained(model_path, offload=cpu_offload_enabled).to(device)
+        if cache_threshold > 0:
+            transformer = apply_cache_on_transformer(transformer=transformer, residual_diff_threshold=cache_threshold)
 
         if os.path.exists(os.path.join(model_path, "comfy_config.json")):
             config_path = os.path.join(model_path, "comfy_config.json")
