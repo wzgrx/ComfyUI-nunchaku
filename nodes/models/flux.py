@@ -54,7 +54,7 @@ class ComfyFluxWrapper(nn.Module):
         img_ids = FluxPipeline._prepare_latent_image_ids(bs, h_len, w_len, x.device, x.dtype)
         txt_ids = torch.zeros((context.shape[1], 3), device=x.device, dtype=x.dtype)
 
-        # load and compose lora
+        # load and compose LoRA
         if self.loras != model.comfy_lora_meta_list:
             lora_to_be_composed = []
             for _ in range(max(0, len(model.comfy_lora_meta_list) - len(self.loras))):

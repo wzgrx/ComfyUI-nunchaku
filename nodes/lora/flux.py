@@ -10,8 +10,6 @@ logger = logging.getLogger("NunchakuFluxLoraLoader")
 
 
 class NunchakuFluxLoraLoader:
-    def __init__(self):
-        self.cur_lora_name = "None"
 
     @classmethod
     def INPUT_TYPES(s):
