@@ -1,6 +1,5 @@
 import json
 import os
-from contextlib import nullcontext
 
 import torch
 from diffusers import FluxPipeline, FluxTransformer2DModel
@@ -30,6 +29,15 @@ class ComfyFluxWrapper(nn.Module):
         self._cache_context = None
 
     def forward(self, x, timestep, context, y, guidance, control=None, transformer_options={}, **kwargs):
+        if isinstance(timestep, torch.Tensor):
+            if timestep.numel() == 1:
+                timestep_float = timestep.item()
+            else:
+                timestep_float = timestep.flatten()[0].item()
+        else:
+            assert isinstance(timestep, float)
+            timestep_float = timestep
+
         assert control is None  # for now
 
         model = self.model
@@ -78,13 +86,19 @@ class ComfyFluxWrapper(nn.Module):
                 model.update_lora_params(composed_lora)
 
         if getattr(model, "_is_cached", False):
-            if self._prev_timestep is None or self._prev_timestep < timestep:
+            if self._prev_timestep is None or self._prev_timestep < timestep_float:
                 self._cache_context = create_cache_context()
-            context = cache_context(self._cache_context)
+            with cache_context(self._cache_context):
+                out = model(
+                    hidden_states=img,
+                    encoder_hidden_states=context,
+                    pooled_projections=y,
+                    timestep=timestep,
+                    img_ids=img_ids,
+                    txt_ids=txt_ids,
+                    guidance=guidance if self.config["guidance_embed"] else None,
+                ).sample
         else:
-            context = nullcontext()
-
-        with context:
             out = model(
                 hidden_states=img,
                 encoder_hidden_states=context,
@@ -98,7 +112,7 @@ class ComfyFluxWrapper(nn.Module):
         out = rearrange(out, "b (h w) (c ph pw) -> b c (h ph) (w pw)", h=h_len, w=w_len, ph=patch_size, pw=patch_size)
         out = out[:, :, :h, :w]
 
-        self._prev_timestep = timestep
+        self._prev_timestep = timestep_float
         return out
 
 
