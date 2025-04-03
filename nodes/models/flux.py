@@ -38,8 +38,6 @@ class ComfyFluxWrapper(nn.Module):
             assert isinstance(timestep, float)
             timestep_float = timestep
 
-        assert control is None  # for now
-
         model = self.model
         assert isinstance(model, NunchakuFluxTransformer2dModel)
 
@@ -97,6 +95,8 @@ class ComfyFluxWrapper(nn.Module):
                     img_ids=img_ids,
                     txt_ids=txt_ids,
                     guidance=guidance if self.config["guidance_embed"] else None,
+                    controlnet_block_samples=None if control is None else control["input"],
+                    controlnet_single_block_samples=None if control is None else control["output"],
                 ).sample
         else:
             out = model(
@@ -107,6 +107,8 @@ class ComfyFluxWrapper(nn.Module):
                 img_ids=img_ids,
                 txt_ids=txt_ids,
                 guidance=guidance if self.config["guidance_embed"] else None,
+                controlnet_block_samples=None if control is None else control["input"],
+                controlnet_single_block_samples=None if control is None else control["output"],
             ).sample
 
         out = rearrange(out, "b (h w) (c ph pw) -> b c (h ph) (w pw)", h=h_len, w=w_len, ph=patch_size, pw=patch_size)
