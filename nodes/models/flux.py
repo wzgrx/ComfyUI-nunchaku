@@ -117,6 +117,13 @@ class ComfyFluxWrapper(nn.Module):
 
 
 class NunchakuFluxDiTLoader:
+    def __init__(self):
+        self.transformer = None
+        self.model_path = None
+        self.device = None
+        self.cpu_offload = None
+        self.cache_threshold = None
+
     @classmethod
     def INPUT_TYPES(s):
         prefixes = folder_paths.folder_names_and_paths["diffusion_models"][0]
@@ -132,6 +139,19 @@ class NunchakuFluxDiTLoader:
                 local_folders.update(local_folders_)
         model_paths = sorted(list(local_folders))
         ngpus = torch.cuda.device_count()
+
+        all_turing = True
+        for i in range(torch.cuda.device_count()):
+            capability = torch.cuda.get_device_capability(i)
+            sm = f"{capability[0]}{capability[1]}"
+            if sm != "75":
+                all_turing = False
+
+        if all_turing:
+            attention_options = ["nunchaku-fp16"]  # turing GPUs do not support flashattn2
+        else:
+            attention_options = ["nunchaku-fp16", "flash-attention2"]
+
         return {
             "required": {
                 "model_path": (model_paths, {"tooltip": "The SVDQuant quantized FLUX.1 models."}),
@@ -145,6 +165,15 @@ class NunchakuFluxDiTLoader:
                         "tooltip": "Adjusts the caching tolerance like `residual_diff_threshold` in WaveSpeed. "
                         "Increasing the value enhances speed at the cost of quality. "
                         "A typical setting is 0.12. Setting it to 0 disables the effect.",
+                    },
+                ),
+                "attention": (
+                    attention_options,
+                    {
+                        "default": attention_options[0],
+                        "tooltip": "Attention implementation. The default implementation is `flash-attention2`. "
+                        "`nunchaku-fp16` use FP16 attention, offering ~1.2× speedup. "
+                        "Note that 20-series GPUs can only use `nunchaku-fp16`.",
                     },
                 ),
                 "cpu_offload": (
@@ -166,7 +195,16 @@ class NunchakuFluxDiTLoader:
                         "tooltip": "The GPU device ID to use for the model.",
                     },
                 ),
-            }
+            },
+            "optional": {
+                "i2f_mode": (
+                    ["enabled", "always"],
+                    {
+                        "default": "enabled",
+                        "tooltip": "The GEMM implementation for 20-series GPUs—this option is only applicable to these GPUs.",
+                    },
+                )
+            },
         }
 
     RETURN_TYPES = ("MODEL",)
@@ -175,7 +213,7 @@ class NunchakuFluxDiTLoader:
     TITLE = "Nunchaku FLUX DiT Loader"
 
     def load_model(
-        self, model_path: str, cache_threshold: float, cpu_offload: str, device_id: int, **kwargs
+        self, model_path: str, attention: str, cache_threshold: float, cpu_offload: str, device_id: int, **kwargs
     ) -> tuple[FluxTransformer2DModel]:
         device = f"cuda:{device_id}"
         prefixes = folder_paths.folder_names_and_paths["diffusion_models"][0]
@@ -190,9 +228,9 @@ class NunchakuFluxDiTLoader:
 
         # Get the GPU properties
         gpu_properties = torch.cuda.get_device_properties(device_id)
-        gpu_memory = gpu_properties.total_memory / (1024**2)  # Convert to MB
+        gpu_memory = gpu_properties.total_memory / (1024**2)  # Convert to MiB
         gpu_name = gpu_properties.name
-        print(f"GPU {device_id} ({gpu_name}) Memory: {gpu_memory} MB")
+        print(f"GPU {device_id} ({gpu_name}) Memory: {gpu_memory} MiB")
 
         # Check if CPU offload needs to be enabled
         if cpu_offload == "auto":
@@ -209,9 +247,31 @@ class NunchakuFluxDiTLoader:
             cpu_offload_enabled = False
             print("Disable CPU offload")
 
-        transformer = NunchakuFluxTransformer2dModel.from_pretrained(model_path, offload=cpu_offload_enabled).to(device)
-        if cache_threshold > 0:
-            transformer = apply_cache_on_transformer(transformer=transformer, residual_diff_threshold=cache_threshold)
+        if (
+            self.model_path != model_path
+            or self.device != device
+            or self.cpu_offload != cpu_offload_enabled
+            or self.cache_threshold != cache_threshold
+        ):
+            if self.transformer is not None:
+                self.transformer.reset()
+            self.transformer = NunchakuFluxTransformer2dModel.from_pretrained(
+                model_path, offload=cpu_offload_enabled, device=device
+            )
+            self.transformer = apply_cache_on_transformer(
+                transformer=self.transformer, residual_diff_threshold=cache_threshold
+            )
+            self.model_path = model_path
+            self.device = device
+            self.cpu_offload = cpu_offload_enabled
+            self.cache_threshold = cache_threshold
+
+        transformer = self.transformer
+        if attention == "nunchaku-fp16":
+            transformer.set_attention_impl("nunchaku-fp16")
+        else:
+            assert attention == "flash-attention2"
+            transformer.set_attention_impl("flashattn2")
 
         if os.path.exists(os.path.join(model_path, "comfy_config.json")):
             config_path = os.path.join(model_path, "comfy_config.json")
