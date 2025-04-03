@@ -14,7 +14,7 @@ from nunchaku import NunchakuFluxTransformer2dModel
 from nunchaku.caching.diffusers_adapters.flux import apply_cache_on_transformer
 from nunchaku.caching.utils import cache_context, create_cache_context
 from nunchaku.lora.flux.compose import compose_lora
-from nunchaku.utils import load_state_dict_in_safetensors
+from nunchaku.utils import is_turing, load_state_dict_in_safetensors
 
 
 class ComfyFluxWrapper(nn.Module):
@@ -123,6 +123,7 @@ class NunchakuFluxDiTLoader:
         self.device = None
         self.cpu_offload = None
         self.cache_threshold = None
+        self.data_type = None
 
     @classmethod
     def INPUT_TYPES(s):
@@ -142,15 +143,15 @@ class NunchakuFluxDiTLoader:
 
         all_turing = True
         for i in range(torch.cuda.device_count()):
-            capability = torch.cuda.get_device_capability(i)
-            sm = f"{capability[0]}{capability[1]}"
-            if sm != "75":
+            if not is_turing(f"cuda:{i}"):
                 all_turing = False
 
         if all_turing:
             attention_options = ["nunchaku-fp16"]  # turing GPUs do not support flashattn2
+            dtype_options = ["float16"]
         else:
             attention_options = ["nunchaku-fp16", "flash-attention2"]
+            dtype_options = ["bfloat16", "float16"]
 
         return {
             "required": {
@@ -195,6 +196,14 @@ class NunchakuFluxDiTLoader:
                         "tooltip": "The GPU device ID to use for the model.",
                     },
                 ),
+                "data_type": (
+                    dtype_options,
+                    {
+                        "default": dtype_options[0],
+                        "tooltip": "Specifies the model's data type. Default is `bfloat16`. "
+                        "For 20-series GPUs, which do not support `bfloat16`, use `float16` instead.",
+                    },
+                ),
             },
             "optional": {
                 "i2f_mode": (
@@ -213,7 +222,14 @@ class NunchakuFluxDiTLoader:
     TITLE = "Nunchaku FLUX DiT Loader"
 
     def load_model(
-        self, model_path: str, attention: str, cache_threshold: float, cpu_offload: str, device_id: int, **kwargs
+        self,
+        model_path: str,
+        attention: str,
+        cache_threshold: float,
+        cpu_offload: str,
+        device_id: int,
+        data_type: str,
+        **kwargs,
     ) -> tuple[FluxTransformer2DModel]:
         device = f"cuda:{device_id}"
         prefixes = folder_paths.folder_names_and_paths["diffusion_models"][0]
@@ -252,11 +268,15 @@ class NunchakuFluxDiTLoader:
             or self.device != device
             or self.cpu_offload != cpu_offload_enabled
             or self.cache_threshold != cache_threshold
+            or self.data_type != data_type
         ):
             if self.transformer is not None:
                 self.transformer.reset()
             self.transformer = NunchakuFluxTransformer2dModel.from_pretrained(
-                model_path, offload=cpu_offload_enabled, device=device
+                model_path,
+                offload=cpu_offload_enabled,
+                device=device,
+                torch_dtype=torch.float16 if data_type == "float16" else torch.bfloat16,
             )
             self.transformer = apply_cache_on_transformer(
                 transformer=self.transformer, residual_diff_threshold=cache_threshold
