@@ -161,7 +161,7 @@ class NunchakuFluxDiTLoader:
                 "cache_threshold": (
                     "FLOAT",
                     {
-                        "default": 1.0,
+                        "default": 0,
                         "min": 0,
                         "max": 1,
                         "step": 0.001,
@@ -273,7 +273,10 @@ class NunchakuFluxDiTLoader:
             or self.data_type != data_type
         ):
             if self.transformer is not None:
-                self.transformer.reset()
+                transformer = self.transformer
+                self.transformer = None
+                del transformer
+                torch.cuda.empty_cache()
             self.transformer = NunchakuFluxTransformer2dModel.from_pretrained(
                 model_path,
                 offload=cpu_offload_enabled,
