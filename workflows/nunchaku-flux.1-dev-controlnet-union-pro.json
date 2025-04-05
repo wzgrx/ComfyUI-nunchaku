@@ -1,8 +1,8 @@
 {
   "id": "69596aa1-f74a-4f0a-9930-d81e45864824",
   "revision": 0,
-  "last_node_id": 25,
-  "last_link_id": 32,
+  "last_node_id": 26,
+  "last_link_id": 33,
   "nodes": [
     {
       "id": 2,
@@ -78,8 +78,7 @@
         "ver": "0.3.27"
       },
       "widgets_values": [
-        "ComfyUI",
-        ""
+        "ComfyUI"
       ]
     },
     {
@@ -94,7 +93,7 @@
         106
       ],
       "flags": {},
-      "order": 14,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -240,14 +239,14 @@
         130
       ],
       "flags": {},
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
           "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 26
+          "link": 33
         },
         {
           "name": "width",
@@ -594,7 +593,7 @@
         58
       ],
       "flags": {},
-      "order": 13,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -753,7 +752,7 @@
         186
       ],
       "flags": {},
-      "order": 15,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -894,44 +893,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 24,
-      "type": "SVDQuantFluxDiTLoader",
-      "pos": [
-        331.4499816894531,
-        962.8056030273438
-      ],
-      "size": [
-        315,
-        202
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "localized_name": "MODEL",
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            26
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SVDQuantFluxDiTLoader"
-      },
-      "widgets_values": [
-        "svdq-int4-flux.1-dev",
-        0,
-        "nunchaku-fp16",
-        "auto",
-        0,
-        "bfloat16",
-        "enabled"
-      ]
-    },
-    {
       "id": 23,
       "type": "ControlNetLoader",
       "pos": [
@@ -943,7 +904,7 @@
         58
       ],
       "flags": {},
-      "order": 8,
+      "order": 7,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -964,6 +925,44 @@
       },
       "widgets_values": [
         "controlnet_union.safetensors"
+      ]
+    },
+    {
+      "id": 26,
+      "type": "NunchakuFluxDiTLoader",
+      "pos": [
+        309.328125,
+        964.0291748046875
+      ],
+      "size": [
+        315,
+        202
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            33
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NunchakuFluxDiTLoader"
+      },
+      "widgets_values": [
+        "svdq-int4-flux.1-dev",
+        0,
+        "nunchaku-fp16",
+        "auto",
+        0,
+        "bfloat16",
+        "enabled"
       ]
     }
   ],
@@ -1113,14 +1112,6 @@
       "CONTROL_NET"
     ],
     [
-      26,
-      24,
-      0,
-      11,
-      0,
-      "MODEL"
-    ],
-    [
       27,
       1,
       0,
@@ -1167,6 +1158,14 @@
       8,
       0,
       "CONDITIONING"
+    ],
+    [
+      33,
+      26,
+      0,
+      11,
+      0,
+      "MODEL"
     ]
   ],
   "groups": [],
@@ -1175,8 +1174,8 @@
     "ds": {
       "scale": 0.762776844438556,
       "offset": [
-        442.12389546050724,
-        -435.5666478839245
+        1222.8058856929722,
+        -406.9795149808618
       ]
     }
   },

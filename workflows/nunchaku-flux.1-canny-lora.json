@@ -1,8 +1,8 @@
 {
   "id": "b2ac78a1-9f70-4787-baf7-9703dc66e15e",
   "revision": 0,
-  "last_node_id": 41,
-  "last_link_id": 82,
+  "last_node_id": 43,
+  "last_link_id": 84,
   "nodes": [
     {
       "id": 38,
@@ -61,7 +61,7 @@
         86
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -144,7 +144,7 @@
         82
       ],
       "flags": {},
-      "order": 8,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -228,7 +228,7 @@
         46
       ],
       "flags": {},
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -277,7 +277,7 @@
         893.8475341796875
       ],
       "flags": {},
-      "order": 13,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -294,7 +294,8 @@
         "ver": "0.3.24"
       },
       "widgets_values": [
-        "ComfyUI"
+        "ComfyUI",
+        ""
       ]
     },
     {
@@ -309,7 +310,7 @@
         58
       ],
       "flags": {},
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
@@ -442,7 +443,7 @@
         262
       ],
       "flags": {},
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -450,7 +451,7 @@
           "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 82
+          "link": 84
         },
         {
           "label": "positive",
@@ -492,7 +493,7 @@
         "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        375243737277320,
+        107906103108925,
         "randomize",
         20,
         1,
@@ -560,7 +561,7 @@
         481.0416259765625
       ],
       "flags": {},
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -577,7 +578,9 @@
         "ver": "0.3.24",
         "Node name for S&R": "PreviewImage"
       },
-      "widgets_values": []
+      "widgets_values": [
+        ""
+      ]
     },
     {
       "id": 23,
@@ -627,14 +630,14 @@
       "bgcolor": "#353"
     },
     {
-      "id": 36,
-      "type": "SVDQuantFluxDiTLoader",
+      "id": 42,
+      "type": "NunchakuFluxDiTLoader",
       "pos": [
-        -17.018863677978516,
-        -174.68344116210938
+        78.86559295654297,
+        -122.51927185058594
       ],
       "size": [
-        395.6002197265625,
+        315,
         202
       ],
       "flags": {},
@@ -646,14 +649,13 @@
           "localized_name": "MODEL",
           "name": "MODEL",
           "type": "MODEL",
-          "slot_index": 0,
-          "links": []
+          "links": [
+            83
+          ]
         }
       ],
       "properties": {
-        "Node name for S&R": "SVDQuantFluxDiTLoader",
-        "cnr_id": "svdquant",
-        "ver": "0.1.5"
+        "Node name for S&R": "NunchakuFluxDiTLoader"
       },
       "widgets_values": [
         "svdq-int4-flux.1-dev",
@@ -666,25 +668,25 @@
       ]
     },
     {
-      "id": 40,
-      "type": "SVDQuantFluxLoraLoader",
+      "id": 43,
+      "type": "NunchakuFluxLoraLoader",
       "pos": [
-        598.9288330078125,
-        -123.85690307617188
+        538.5196533203125,
+        -115.99840545654297
       ],
       "size": [
         340.20001220703125,
         82
       ],
       "flags": {},
-      "order": 14,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
           "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 78
+          "link": 83
         }
       ],
       "outputs": [
@@ -693,12 +695,12 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            82
+            84
           ]
         }
       ],
       "properties": {
-        "Node name for S&R": "SVDQuantFluxLoraLoader"
+        "Node name for S&R": "NunchakuFluxLoraLoader"
       },
       "widgets_values": [
         "canny.safetensors",
@@ -844,8 +846,16 @@
       "MODEL"
     ],
     [
-      82,
-      40,
+      83,
+      42,
+      0,
+      43,
+      0,
+      "MODEL"
+    ],
+    [
+      84,
+      43,
       0,
       3,
       0,
@@ -858,8 +868,8 @@
     "ds": {
       "scale": 0.8140274938684117,
       "offset": [
-        105.4514134164013,
-        282.83756383127684
+        633.2890855809035,
+        313.51162384315967
       ]
     },
     "node_versions": {

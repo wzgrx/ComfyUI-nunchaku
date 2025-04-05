@@ -1,8 +1,8 @@
 {
   "id": "3b178583-4f92-4405-a4d2-f7a5e1143753",
   "revision": 0,
-  "last_node_id": 48,
-  "last_link_id": 94,
+  "last_node_id": 49,
+  "last_link_id": 95,
   "nodes": [
     {
       "id": 7,
@@ -157,7 +157,7 @@
           "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 78
+          "link": 95
         },
         {
           "label": "positive",
@@ -199,7 +199,7 @@
         "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        220648639774438,
+        753963817490113,
         "randomize",
         20,
         1,
@@ -237,7 +237,9 @@
         "ver": "0.3.27",
         "Node name for S&R": "PreviewImage"
       },
-      "widgets_values": []
+      "widgets_values": [
+        ""
+      ]
     },
     {
       "id": 8,
@@ -317,7 +319,8 @@
         "ver": "0.3.27"
       },
       "widgets_values": [
-        "ComfyUI"
+        "ComfyUI",
+        ""
       ]
     },
     {
@@ -535,45 +538,6 @@
       ]
     },
     {
-      "id": 39,
-      "type": "SVDQuantFluxDiTLoader",
-      "pos": [
-        821.2710571289062,
-        -245.14476013183594
-      ],
-      "size": [
-        315,
-        202
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "localized_name": "MODEL",
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            78
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SVDQuantFluxDiTLoader"
-      },
-      "widgets_values": [
-        "svdq-int4-flux.1-depth-dev",
-        0,
-        "nunchaku-fp16",
-        "auto",
-        0,
-        "bfloat16",
-        "enabled"
-      ]
-    },
-    {
       "id": 42,
       "type": "ImageScale",
       "pos": [
@@ -659,6 +623,44 @@
       "widgets_values": [
         "depth_anything_vitl14.pth",
         1024
+      ]
+    },
+    {
+      "id": 49,
+      "type": "NunchakuFluxDiTLoader",
+      "pos": [
+        963.892578125,
+        -199.60679626464844
+      ],
+      "size": [
+        315,
+        202
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            95
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NunchakuFluxDiTLoader"
+      },
+      "widgets_values": [
+        "svdq-int4-flux.1-depth-dev",
+        0,
+        "nunchaku-fp16",
+        "auto",
+        0,
+        "bfloat16",
+        "enabled"
       ]
     }
   ],
@@ -752,14 +754,6 @@
       "LATENT"
     ],
     [
-      78,
-      39,
-      0,
-      3,
-      0,
-      "MODEL"
-    ],
-    [
       82,
       17,
       0,
@@ -798,6 +792,14 @@
       35,
       3,
       "IMAGE"
+    ],
+    [
+      95,
+      49,
+      0,
+      3,
+      0,
+      "MODEL"
     ]
   ],
   "groups": [],
@@ -806,8 +808,8 @@
     "ds": {
       "scale": 0.8140274938684042,
       "offset": [
-        1109.1757596522782,
-        918.8848886049691
+        583.9452653400073,
+        380.90044568833537
       ]
     },
     "node_versions": {

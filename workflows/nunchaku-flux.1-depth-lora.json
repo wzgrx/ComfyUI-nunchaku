@@ -1,8 +1,8 @@
 {
   "id": "3b178583-4f92-4405-a4d2-f7a5e1143753",
   "revision": 0,
-  "last_node_id": 51,
-  "last_link_id": 97,
+  "last_node_id": 53,
+  "last_link_id": 99,
   "nodes": [
     {
       "id": 34,
@@ -525,7 +525,7 @@
           "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 97
+          "link": 99
         },
         {
           "label": "positive",
@@ -574,46 +574,6 @@
         "euler",
         "normal",
         1
-      ]
-    },
-    {
-      "id": 51,
-      "type": "SVDQuantFluxLoraLoader",
-      "pos": [
-        958.7472534179688,
-        -110.29281616210938
-      ],
-      "size": [
-        340.20001220703125,
-        82
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "model",
-          "name": "model",
-          "type": "MODEL",
-          "link": 96
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "MODEL",
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            97
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SVDQuantFluxLoraLoader"
-      },
-      "widgets_values": [
-        "depth.safetensors",
-        0.9500000000000002
       ]
     },
     {
@@ -666,11 +626,51 @@
       "bgcolor": "#533"
     },
     {
-      "id": 39,
-      "type": "SVDQuantFluxDiTLoader",
+      "id": 53,
+      "type": "NunchakuFluxLoraLoader",
       "pos": [
-        569.8421020507812,
-        -258.51702880859375
+        990.1519775390625,
+        -199.45751953125
+      ],
+      "size": [
+        340.20001220703125,
+        82
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 98
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            99
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NunchakuFluxLoraLoader"
+      },
+      "widgets_values": [
+        "depth.safetensors",
+        0.9500000000000002
+      ]
+    },
+    {
+      "id": 52,
+      "type": "NunchakuFluxDiTLoader",
+      "pos": [
+        615.4609985351562,
+        -233.65086364746094
       ],
       "size": [
         315,
@@ -685,18 +685,17 @@
           "localized_name": "MODEL",
           "name": "MODEL",
           "type": "MODEL",
-          "slot_index": 0,
           "links": [
-            96
+            98
           ]
         }
       ],
       "properties": {
-        "Node name for S&R": "SVDQuantFluxDiTLoader"
+        "Node name for S&R": "NunchakuFluxDiTLoader"
       },
       "widgets_values": [
         "svdq-int4-flux.1-dev",
-        0.12000000000000002,
+        0,
         "nunchaku-fp16",
         "auto",
         0,
@@ -835,16 +834,16 @@
       "IMAGE"
     ],
     [
-      96,
-      39,
+      98,
+      52,
       0,
-      51,
+      53,
       0,
       "MODEL"
     ],
     [
-      97,
-      51,
+      99,
+      53,
       0,
       3,
       0,

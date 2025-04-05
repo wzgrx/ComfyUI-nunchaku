@@ -1,8 +1,8 @@
 {
   "id": "f253212e-0ec7-40c5-9671-bafc52d66023",
   "revision": 0,
-  "last_node_id": 42,
-  "last_link_id": 125,
+  "last_node_id": 47,
+  "last_link_id": 130,
   "nodes": [
     {
       "id": 26,
@@ -336,7 +336,7 @@
         "Node name for S&R": "RandomNoise"
       },
       "widgets_values": [
-        381705558410347,
+        794018202952262,
         "randomize"
       ],
       "color": "#2a363b",
@@ -361,7 +361,7 @@
           "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 123
+          "link": 130
         },
         {
           "name": "width",
@@ -554,169 +554,6 @@
       ]
     },
     {
-      "id": 41,
-      "type": "SVDQuantFluxLoraLoader",
-      "pos": [
-        422.2554626464844,
-        885.46533203125
-      ],
-      "size": [
-        328.7402648925781,
-        92.81621551513672
-      ],
-      "flags": {},
-      "order": 11,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "model",
-          "name": "model",
-          "type": "MODEL",
-          "link": 125
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "MODEL",
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            123
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SVDQuantFluxLoraLoader",
-        "cnr_id": "svdquant",
-        "ver": "0.1.5"
-      },
-      "widgets_values": [
-        "diffusers-ghibsky.safetensors",
-        1.0000000000000002
-      ]
-    },
-    {
-      "id": 39,
-      "type": "SVDQuantTextEncoderLoader",
-      "pos": [
-        394.3188171386719,
-        531.8152465820312
-      ],
-      "size": [
-        352.79998779296875,
-        178
-      ],
-      "flags": {},
-      "order": 5,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "localized_name": "CLIP",
-          "name": "CLIP",
-          "type": "CLIP",
-          "links": [
-            118
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SVDQuantTextEncoderLoader",
-        "cnr_id": "svdquant",
-        "ver": "0.1.5"
-      },
-      "widgets_values": [
-        "flux",
-        "t5xxl_fp16.safetensors",
-        "clip_l.safetensors",
-        256,
-        "disable",
-        "none"
-      ]
-    },
-    {
-      "id": 38,
-      "type": "SVDQuantFluxDiTLoader",
-      "pos": [
-        73.59230041503906,
-        998.561767578125
-      ],
-      "size": [
-        315,
-        202
-      ],
-      "flags": {},
-      "order": 6,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "localized_name": "MODEL",
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            124
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SVDQuantFluxDiTLoader",
-        "cnr_id": "svdquant",
-        "ver": "0.1.5"
-      },
-      "widgets_values": [
-        "svdq-int4-flux.1-dev",
-        0,
-        "nunchaku-fp16",
-        "auto",
-        0,
-        "float16",
-        "always"
-      ]
-    },
-    {
-      "id": 42,
-      "type": "SVDQuantFluxLoraLoader",
-      "pos": [
-        421.7560119628906,
-        1029.882568359375
-      ],
-      "size": [
-        340.20001220703125,
-        82
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "model",
-          "name": "model",
-          "type": "MODEL",
-          "link": 124
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "MODEL",
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            125
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SVDQuantFluxLoraLoader"
-      },
-      "widgets_values": [
-        "flux1-turbo.safetensors",
-        1
-      ]
-    },
-    {
       "id": 17,
       "type": "BasicScheduler",
       "pos": [
@@ -779,7 +616,7 @@
           "localized_name": "clip",
           "name": "clip",
           "type": "CLIP",
-          "link": 118
+          "link": 127
         }
       ],
       "outputs": [
@@ -804,6 +641,161 @@
       ],
       "color": "#232",
       "bgcolor": "#353"
+    },
+    {
+      "id": 44,
+      "type": "NunchakuTextEncoderLoader",
+      "pos": [
+        240.8671112060547,
+        527.06884765625
+      ],
+      "size": [
+        352.79998779296875,
+        178
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            127
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NunchakuTextEncoderLoader"
+      },
+      "widgets_values": [
+        "flux",
+        "t5xxl_fp16.safetensors",
+        "clip_l.safetensors",
+        512,
+        "disable",
+        "none"
+      ]
+    },
+    {
+      "id": 47,
+      "type": "NunchakuFluxLoraLoader",
+      "pos": [
+        419.634033203125,
+        887.4461669921875
+      ],
+      "size": [
+        340.20001220703125,
+        82
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 129
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            130
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NunchakuFluxLoraLoader"
+      },
+      "widgets_values": [
+        "diffusers-ghibsky.safetensors",
+        1
+      ]
+    },
+    {
+      "id": 46,
+      "type": "NunchakuFluxLoraLoader",
+      "pos": [
+        411.6319885253906,
+        1035.1226806640625
+      ],
+      "size": [
+        340.20001220703125,
+        82
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 128
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            129
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NunchakuFluxLoraLoader"
+      },
+      "widgets_values": [
+        "flux1-turbo.safetensors",
+        1
+      ]
+    },
+    {
+      "id": 45,
+      "type": "NunchakuFluxDiTLoader",
+      "pos": [
+        53.896854400634766,
+        1022.2003784179688
+      ],
+      "size": [
+        315,
+        202
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            128
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NunchakuFluxDiTLoader"
+      },
+      "widgets_values": [
+        "svdq-int4-flux.1-dev",
+        0,
+        "nunchaku-fp16",
+        "auto",
+        0,
+        "bfloat16",
+        "enabled"
+      ]
     }
   ],
   "links": [
@@ -936,34 +928,34 @@
       "LATENT"
     ],
     [
-      118,
-      39,
+      127,
+      44,
       0,
       6,
       0,
       "CLIP"
     ],
     [
-      123,
-      41,
+      128,
+      45,
+      0,
+      46,
+      0,
+      "MODEL"
+    ],
+    [
+      129,
+      46,
+      0,
+      47,
+      0,
+      "MODEL"
+    ],
+    [
+      130,
+      47,
       0,
       30,
-      0,
-      "MODEL"
-    ],
-    [
-      124,
-      38,
-      0,
-      42,
-      0,
-      "MODEL"
-    ],
-    [
-      125,
-      42,
-      0,
-      41,
       0,
       "MODEL"
     ]
@@ -972,10 +964,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.7627768444385505,
+      "scale": 0.7400249944258178,
       "offset": [
-        495.63112243432045,
-        36.365136244800745
+        1112.4204268192373,
+        -37.40798400402991
       ]
     },
     "groupNodes": {

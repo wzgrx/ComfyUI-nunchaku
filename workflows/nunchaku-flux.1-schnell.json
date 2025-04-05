@@ -1,8 +1,8 @@
 {
   "id": "d24d0f3f-b304-405e-b7c4-0b0abfa1c33b",
   "revision": 0,
-  "last_node_id": 29,
-  "last_link_id": 43,
+  "last_node_id": 31,
+  "last_link_id": 46,
   "nodes": [
     {
       "id": 8,
@@ -136,14 +136,14 @@
         106
       ],
       "flags": {},
-      "order": 7,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
           "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 41
+          "link": 45
         }
       ],
       "outputs": [
@@ -187,7 +187,7 @@
           "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 42
+          "link": 44
         },
         {
           "localized_name": "conditioning",
@@ -227,14 +227,14 @@
         164.31304931640625
       ],
       "flags": {},
-      "order": 6,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
           "localized_name": "clip",
           "name": "clip",
           "type": "CLIP",
-          "link": 43
+          "link": 46
         }
       ],
       "outputs": [
@@ -400,50 +400,6 @@
       ]
     },
     {
-      "id": 29,
-      "type": "SVDQuantTextEncoderLoader",
-      "pos": [
-        -40.45120620727539,
-        185.42774963378906
-      ],
-      "size": [
-        352.79998779296875,
-        178
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "t5_min_length",
-          "type": 0,
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "CLIP",
-          "name": "CLIP",
-          "type": "CLIP",
-          "slot_index": 0,
-          "links": [
-            43
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SVDQuantTextEncoderLoader"
-      },
-      "widgets_values": [
-        "flux",
-        "t5xxl_fp16.safetensors",
-        "clip_l.safetensors",
-        512,
-        "disable",
-        "none"
-      ]
-    },
-    {
       "id": 25,
       "type": "RandomNoise",
       "pos": [
@@ -455,7 +411,7 @@
         82
       ],
       "flags": {},
-      "order": 4,
+      "order": 3,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -482,18 +438,18 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 28,
-      "type": "SVDQuantFluxDiTLoader",
+      "id": 30,
+      "type": "NunchakuFluxDiTLoader",
       "pos": [
-        78.87390899658203,
-        710.7421264648438
+        -51.99778366088867,
+        554.4547119140625
       ],
       "size": [
         315,
         202
       ],
       "flags": {},
-      "order": 5,
+      "order": 4,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -501,15 +457,14 @@
           "localized_name": "MODEL",
           "name": "MODEL",
           "type": "MODEL",
-          "slot_index": 0,
           "links": [
-            41,
-            42
+            44,
+            45
           ]
         }
       ],
       "properties": {
-        "Node name for S&R": "SVDQuantFluxDiTLoader"
+        "Node name for S&R": "NunchakuFluxDiTLoader"
       },
       "widgets_values": [
         "svdq-int4-flux.1-schnell",
@@ -519,6 +474,43 @@
         0,
         "bfloat16",
         "enabled"
+      ]
+    },
+    {
+      "id": 31,
+      "type": "NunchakuTextEncoderLoader",
+      "pos": [
+        -86.92931365966797,
+        273.9510803222656
+      ],
+      "size": [
+        352.79998779296875,
+        178
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            46
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NunchakuTextEncoderLoader"
+      },
+      "widgets_values": [
+        "flux",
+        "t5xxl_fp16.safetensors",
+        "clip_l.safetensors",
+        512,
+        "disable",
+        "none"
       ]
     }
   ],
@@ -596,24 +588,24 @@
       "CONDITIONING"
     ],
     [
-      41,
-      28,
-      0,
-      17,
-      0,
-      "MODEL"
-    ],
-    [
-      42,
-      28,
+      44,
+      30,
       0,
       22,
       0,
       "MODEL"
     ],
     [
-      43,
-      29,
+      45,
+      30,
+      0,
+      17,
+      0,
+      "MODEL"
+    ],
+    [
+      46,
+      31,
       0,
       6,
       0,
@@ -626,8 +618,8 @@
     "ds": {
       "scale": 1.0152559799477088,
       "offset": [
-        353.1755236794904,
-        17.158927904567516
+        517.2566558039406,
+        -11.10350450888439
       ]
     },
     "node_versions": {

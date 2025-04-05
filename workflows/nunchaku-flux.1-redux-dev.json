@@ -1,8 +1,8 @@
 {
   "id": "bdec6d53-d024-44ba-b365-bffa04ed8c10",
   "revision": 0,
-  "last_node_id": 44,
-  "last_link_id": 124,
+  "last_node_id": 45,
+  "last_link_id": 125,
   "nodes": [
     {
       "id": 16,
@@ -188,7 +188,7 @@
         "Node name for S&R": "RandomNoise"
       },
       "widgets_values": [
-        870214477446981,
+        967481450471827,
         "randomize"
       ],
       "color": "#2a363b",
@@ -259,7 +259,7 @@
           "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 124
+          "link": 125
         },
         {
           "name": "width",
@@ -466,8 +466,7 @@
         "ver": "0.3.27"
       },
       "widgets_values": [
-        "ComfyUI",
-        ""
+        "ComfyUI"
       ]
     },
     {
@@ -970,11 +969,11 @@
       ]
     },
     {
-      "id": 44,
-      "type": "SVDQuantFluxDiTLoader",
+      "id": 45,
+      "type": "NunchakuFluxDiTLoader",
       "pos": [
-        55.08368682861328,
-        62.6727409362793
+        83.87139129638672,
+        1020.9346313476562
       ],
       "size": [
         315,
@@ -990,12 +989,12 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            124
+            125
           ]
         }
       ],
       "properties": {
-        "Node name for S&R": "SVDQuantFluxDiTLoader"
+        "Node name for S&R": "NunchakuFluxDiTLoader"
       },
       "widgets_values": [
         "svdq-int4-flux.1-dev",
@@ -1186,8 +1185,8 @@
       "CONDITIONING"
     ],
     [
-      124,
-      44,
+      125,
+      45,
       0,
       30,
       0,
@@ -1214,8 +1213,8 @@
     "ds": {
       "scale": 1.1,
       "offset": [
-        547.2207814691736,
-        20.933274027014235
+        806.9864064691736,
+        -252.69362916013048
       ]
     },
     "groupNodes": {

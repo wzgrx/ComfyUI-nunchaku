@@ -1,8 +1,8 @@
 {
   "id": "b2ac78a1-9f70-4787-baf7-9703dc66e15e",
   "revision": 0,
-  "last_node_id": 38,
-  "last_link_id": 76,
+  "last_node_id": 39,
+  "last_link_id": 77,
   "nodes": [
     {
       "id": 9,
@@ -33,7 +33,8 @@
         "ver": "0.3.24"
       },
       "widgets_values": [
-        "ComfyUI"
+        "ComfyUI",
+        ""
       ]
     },
     {
@@ -65,9 +66,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "VAELoader",
         "cnr_id": "comfy-core",
-        "ver": "0.3.24"
+        "ver": "0.3.24",
+        "Node name for S&R": "VAELoader"
       },
       "widgets_values": [
         "ae.safetensors"
@@ -111,9 +112,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "Canny",
         "cnr_id": "comfy-core",
-        "ver": "0.3.24"
+        "ver": "0.3.24",
+        "Node name for S&R": "Canny"
       },
       "widgets_values": [
         0.15,
@@ -154,9 +155,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "ImageScale",
         "cnr_id": "comfy-core",
-        "ver": "0.3.24"
+        "ver": "0.3.24",
+        "Node name for S&R": "ImageScale"
       },
       "widgets_values": [
         "nearest-exact",
@@ -202,9 +203,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "FluxGuidance",
         "cnr_id": "comfy-core",
-        "ver": "0.3.24"
+        "ver": "0.3.24",
+        "Node name for S&R": "FluxGuidance"
       },
       "widgets_values": [
         30
@@ -247,9 +248,9 @@
       ],
       "title": "CLIP Text Encode (Positive Prompt)",
       "properties": {
-        "Node name for S&R": "CLIPTextEncode",
         "cnr_id": "comfy-core",
-        "ver": "0.3.24"
+        "ver": "0.3.24",
+        "Node name for S&R": "CLIPTextEncode"
       },
       "widgets_values": [
         "A robot made of exotic candies and chocolates of different kinds. The background is filled with confetti and celebratory gifts."
@@ -285,9 +286,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "DualCLIPLoader",
         "cnr_id": "comfy-core",
-        "ver": "0.3.24"
+        "ver": "0.3.24",
+        "Node name for S&R": "DualCLIPLoader"
       },
       "widgets_values": [
         "clip_l.safetensors",
@@ -339,9 +340,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "VAEDecode",
         "cnr_id": "comfy-core",
-        "ver": "0.3.24"
+        "ver": "0.3.24",
+        "Node name for S&R": "VAEDecode"
       },
       "widgets_values": []
     },
@@ -365,7 +366,7 @@
           "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 71
+          "link": 77
         },
         {
           "label": "positive",
@@ -402,12 +403,12 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "KSampler",
         "cnr_id": "comfy-core",
-        "ver": "0.3.24"
+        "ver": "0.3.24",
+        "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        1107491852167010,
+        39783659540192,
         "randomize",
         20,
         1,
@@ -441,11 +442,13 @@
       ],
       "outputs": [],
       "properties": {
-        "Node name for S&R": "PreviewImage",
         "cnr_id": "comfy-core",
-        "ver": "0.3.24"
+        "ver": "0.3.24",
+        "Node name for S&R": "PreviewImage"
       },
-      "widgets_values": []
+      "widgets_values": [
+        ""
+      ]
     },
     {
       "id": 35,
@@ -524,48 +527,11 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "InstructPixToPixConditioning",
         "cnr_id": "comfy-core",
-        "ver": "0.3.24"
+        "ver": "0.3.24",
+        "Node name for S&R": "InstructPixToPixConditioning"
       },
       "widgets_values": []
-    },
-    {
-      "id": 36,
-      "type": "SVDQuantFluxDiTLoader",
-      "pos": [
-        823.9686279296875,
-        -126.4416275024414
-      ],
-      "size": [
-        395.6002197265625,
-        106
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "localized_name": "MODEL",
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            71
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SVDQuantFluxDiTLoader",
-        "cnr_id": "svdquant",
-        "ver": "0.1.5"
-      },
-      "widgets_values": [
-        "svdq-int4-flux.1-canny-dev",
-        "disable",
-        0
-      ]
     },
     {
       "id": 17,
@@ -579,7 +545,7 @@
         314.0000305175781
       ],
       "flags": {},
-      "order": 3,
+      "order": 2,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -604,9 +570,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "LoadImage",
         "cnr_id": "comfy-core",
-        "ver": "0.3.24"
+        "ver": "0.3.24",
+        "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
         "robot.png",
@@ -654,15 +620,53 @@
       ],
       "title": "CLIP Text Encode (Negative Prompt)",
       "properties": {
-        "Node name for S&R": "CLIPTextEncode",
         "cnr_id": "comfy-core",
-        "ver": "0.3.24"
+        "ver": "0.3.24",
+        "Node name for S&R": "CLIPTextEncode"
       },
       "widgets_values": [
         ""
       ],
       "color": "#322",
       "bgcolor": "#533"
+    },
+    {
+      "id": 39,
+      "type": "NunchakuFluxDiTLoader",
+      "pos": [
+        793.3363647460938,
+        -164.9036102294922
+      ],
+      "size": [
+        315,
+        202
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            77
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NunchakuFluxDiTLoader"
+      },
+      "widgets_values": [
+        "svdq-int4-flux.1-canny-dev",
+        0,
+        "nunchaku-fp16",
+        "auto",
+        0,
+        "bfloat16",
+        "enabled"
+      ]
     }
   ],
   "links": [
@@ -779,14 +783,6 @@
       "IMAGE"
     ],
     [
-      71,
-      36,
-      0,
-      3,
-      0,
-      "MODEL"
-    ],
-    [
       75,
       17,
       0,
@@ -801,6 +797,14 @@
       18,
       0,
       "IMAGE"
+    ],
+    [
+      77,
+      39,
+      0,
+      3,
+      0,
+      "MODEL"
     ]
   ],
   "groups": [],
@@ -809,8 +813,8 @@
     "ds": {
       "scale": 0.9849732675807723,
       "offset": [
-        301.37307865500037,
-        145.40923517990416
+        350.6069209843413,
+        371.94271826301787
       ]
     },
     "node_versions": {
