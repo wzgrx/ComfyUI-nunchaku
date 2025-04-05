@@ -27,7 +27,7 @@ You can easily use [`comfy-cli`](https://github.com/Comfy-Org/comfy-cli) to run 
 ```shell
 pip install comfy-cli  # Install ComfyUI CLI  
 comfy install          # Install ComfyUI  
-comfy node registry-install nunchaku_nodes  # Install Nunchaku  
+comfy node registry-install ComfyUI-nunchaku  # Install Nunchaku  
 ```
 
 ### ComfyUI-Manager
@@ -54,7 +54,7 @@ comfy node registry-install nunchaku_nodes  # Install Nunchaku
    python main.py
    ```
 
-4. Open the Manager, search `nunchaku` in the Custom Nodes Manager and then install it.
+4. Open the Manager, search `ComfyUI-nunchaku` in the Custom Nodes Manager and then install it.
 
 
 ### Manual Installation
