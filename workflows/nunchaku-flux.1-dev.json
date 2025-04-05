@@ -336,7 +336,7 @@
         "Node name for S&R": "RandomNoise"
       },
       "widgets_values": [
-        1046282813254221,
+        381705558410347,
         "randomize"
       ],
       "color": "#2a363b",
@@ -554,51 +554,6 @@
       ]
     },
     {
-      "id": 6,
-      "type": "CLIPTextEncode",
-      "pos": [
-        225.4257354736328,
-        298.6509704589844
-      ],
-      "size": [
-        422.84503173828125,
-        164.31304931640625
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "clip",
-          "name": "clip",
-          "type": "CLIP",
-          "link": 118
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "CONDITIONING",
-          "name": "CONDITIONING",
-          "type": "CONDITIONING",
-          "slot_index": 0,
-          "links": [
-            41
-          ]
-        }
-      ],
-      "title": "CLIP Text Encode (Positive Prompt)",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.24",
-        "Node name for S&R": "CLIPTextEncode"
-      },
-      "widgets_values": [
-        "GHIBSKY style, a cat on a windowsill gazing out at a starry night sky and distant city lights"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 41,
       "type": "SVDQuantFluxLoraLoader",
       "pos": [
@@ -804,6 +759,51 @@
         8,
         1
       ]
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+        225.4257354736328,
+        298.6509704589844
+      ],
+      "size": [
+        422.84503173828125,
+        164.31304931640625
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 118
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "CONDITIONING",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            41
+          ]
+        }
+      ],
+      "title": "CLIP Text Encode (Positive Prompt)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.24",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "GHIBSKY style, a cyberpunk cat holding a neon sign that says \"SVDQuant is lite and fast!\""
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
     }
   ],
   "links": [
@@ -974,8 +974,8 @@
     "ds": {
       "scale": 0.7627768444385505,
       "offset": [
-        594.229257094262,
-        57.759936213885545
+        495.63112243432045,
+        36.365136244800745
       ]
     },
     "groupNodes": {
