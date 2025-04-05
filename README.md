@@ -107,6 +107,8 @@ comfy node registry-install nunchaku_nodes  # Install Nunchaku
 
 ## Nunchaku Nodes
 
+**Note: We've renamed our nodes from 'SVDQuant XXX Loader' to 'Nunchaku XXX Loader'. Please update your workflows accordingly.**
+
 * **Nunchaku Flux DiT Loader**: A node for loading the FLUX diffusion model. 
 
   * `model_path`: Specifies the model's location. You need to manually download the model folder from our [Hugging Face](https://huggingface.co/collections/mit-han-lab/svdquant-67493c2c2e62a1fc6e93f45c) or [ModelScope](https://modelscope.cn/collections/svdquant-468e8f780c2641) collection. For example, run
@@ -140,7 +142,7 @@ comfy node registry-install nunchaku_nodes  # Install Nunchaku
   * `lora_strength`: Controls the strength of the LoRA module.
   * You can connect **multiple LoRA nodes** together.
   * **Note**: Starting from version 0.2.0, there is no need to convert LoRAs. Simply provide the **original LoRA files** to the loader.
-  
+
 * **Nunchaku Text Encoder Loader**: A node for loading the text encoders.
 
   * For FLUX, use the following files:
@@ -159,10 +161,10 @@ comfy node registry-install nunchaku_nodes  # Install Nunchaku
        ```
 
        After downloading, specify the corresponding folder name as the `int4_model`.
-  
-  
+
+
     * **Note**: Currently, loading the **4-bit T5 model** consumes excessive memory. **We will optimize this later.**
-  
+
 
 
 * **FLUX.1 Depth Preprocessor (deprecated)** : A legacy node for loading a depth estimation model and producing a corresponding depth map. The `model_path` parameter specifies the location of the model checkpoint. You can manually download the model repository from [Hugging Face](https://huggingface.co/LiheYoung/depth-anything-large-hf) and place it under the `models/checkpoints` directory. Alternatively, use the following CLI command:
