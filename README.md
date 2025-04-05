@@ -16,12 +16,6 @@ Join our user groups on [**Slack**](https://join.slack.com/t/nunchaku/shared_inv
 
 Please first install `nunchaku` following the instructions in [README.md](https://github.com/mit-han-lab/nunchaku?tab=readme-ov-file#installation). 
 
-**[Optional]** You need to install `image_gen_aux` if you use `FluxDepthPreprocessor` node:
-
-```shell
-pip install git+https://github.com/asomoza/image_gen_aux.git
-```
-
 ### Comfy-CLI
 
 You can easily use [`comfy-cli`](https://github.com/Comfy-Org/comfy-cli) to run ComfyUI with Nunchaku:
@@ -121,27 +115,27 @@ comfy node registry-install nunchaku_nodes  # Install Nunchaku
 
     **Note: If you rename the model folder, ensure that `comfy_config.json` is present in the folder. You can find this file in our corresponding repositories on [Hugging Face](https://huggingface.co/collections/mit-han-lab/svdquant-67493c2c2e62a1fc6e93f45c) or [ModelScope](https://modelscope.cn/collections/svdquant-468e8f780c2641).**
 
-  * `cache_threshold`: Adjusts the [First-Block Cache](https://github.com/chengzeyi/ParaAttention?tab=readme-ov-file#first-block-cache-our-dynamic-caching) tolerance like `residual_diff_threshold` in [WaveSpeed](https://github.com/chengzeyi/Comfy-WaveSpeed). Increasing the value enhances speed at the cost of quality. A typical setting is 0.12. Setting it to 0 disables the effect.
+  * `cache_threshold`: Controls the [First-Block Cache](https://github.com/chengzeyi/ParaAttention?tab=readme-ov-file#first-block-cache-our-dynamic-caching) tolerance, similar to `residual_diff_threshold` in [WaveSpeed](https://github.com/chengzeyi/Comfy-WaveSpeed). Increasing this value improves speed but may reduce quality. A typical value is 0.12. Setting it to 0 disables the effect.
     
-  * `attention`: The attention implementation method. It can be `flash-attention2` or our `nunchaku-fp16`. Our `nunchaku-fp16` is ~1.2× faster than `flash-attention2` without loss of precision. For Turing GPUs (20-series GPUs) where `flash-attention2` is not supported, you can only use `nunchaku-fp16`.
+  * `attention`: Defines the attention implementation method. You can choose between `flash-attention2` or `nunchaku-fp16`. Our `nunchaku-fp16` is approximately 1.2× faster than `flash-attention2` without compromising precision. For Turing GPUs (20-series), where `flash-attention2` is unsupported, you must use `nunchaku-fp16`.
     
   * `cpu_offload`: Enables CPU offloading for the transformer model. While this reduces GPU memory usage, it may slow down inference.
 
-    - When set to `auto`, it will automatically detect your available GPU memory. If your GPU has more than **14GiB** of memory, offloading will be disabled. Otherwise, it will be enabled.
-    - **Memory usage will be further optimized in node v0.2.**
+    - When set to `auto`, it will automatically detect your available GPU memory. If your GPU has more than 14GiB of memory, offloading will be disabled. Otherwise, it will be enabled.
+    - **Memory usage will be further optimized in node later.**
 
   * `device_id`: Indicates the GPU ID for running the model.
 
-  * `data_type`: The data type of the dequantized tensors. For Turing GPUs (20-series GPUs) do not support `bfloat16` and can only choose `float16`.
+  * `data_type`: Defines the data type for the dequantized tensors. Turing GPUs (20-series) do not support `bfloat16` and can only use `float16`.
 
-  * `i2f_mode`: The GEMM implemenation mode on Turing GPUs (20-series GPUs). You can simply leave it as the default choice.
+  * `i2f_mode`: For Turing (20-series) GPUs, this option controls the GEMM implementation mode. `enabled` and `always` modes exhibit minor differences. This option is ignored on other GPU architectures.
 
 * **Nunchaku FLUX LoRA Loader**: A node for loading LoRA modules for SVDQuant FLUX models.
 
   * Place your LoRA checkpoints in the `models/loras` directory. These will appear as selectable options under `lora_name`.
   * `lora_strength`: Controls the strength of the LoRA module.
-  * You can link **multiple LoRA nodes** together.
-  * **Note**: Starting from v0.2.0, you do not need to convert the LoRAs. Please input the **original LoRA files** to the loader.
+  * You can connect **multiple LoRA nodes** together.
+  * **Note**: Starting from version 0.2.0, there is no need to convert LoRAs. Simply provide the **original LoRA files** to the loader.
   
 * **Nunchaku Text Encoder Loader**: A node for loading the text encoders.
 
