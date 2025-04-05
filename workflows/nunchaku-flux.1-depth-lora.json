@@ -1,58 +1,9 @@
 {
   "id": "3b178583-4f92-4405-a4d2-f7a5e1143753",
   "revision": 0,
-  "last_node_id": 49,
-  "last_link_id": 95,
+  "last_node_id": 53,
+  "last_link_id": 99,
   "nodes": [
-    {
-      "id": 7,
-      "type": "CLIPTextEncode",
-      "pos": [
-        307,
-        282
-      ],
-      "size": [
-        425.27801513671875,
-        180.6060791015625
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 5,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "clip",
-          "localized_name": "clip",
-          "name": "clip",
-          "type": "CLIP",
-          "link": 63
-        }
-      ],
-      "outputs": [
-        {
-          "label": "CONDITIONING",
-          "localized_name": "CONDITIONING",
-          "name": "CONDITIONING",
-          "type": "CONDITIONING",
-          "slot_index": 0,
-          "links": [
-            68
-          ]
-        }
-      ],
-      "title": "CLIP Text Encode (Negative Prompt)",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.27",
-        "Node name for S&R": "CLIPTextEncode"
-      },
-      "widgets_values": [
-        ""
-      ],
-      "color": "#322",
-      "bgcolor": "#533"
-    },
     {
       "id": 34,
       "type": "DualCLIPLoader",
@@ -104,7 +55,7 @@
         58
       ],
       "flags": {},
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
@@ -138,77 +89,6 @@
       ]
     },
     {
-      "id": 3,
-      "type": "KSampler",
-      "pos": [
-        1280,
-        100
-      ],
-      "size": [
-        315,
-        262
-      ],
-      "flags": {},
-      "order": 11,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "model",
-          "localized_name": "model",
-          "name": "model",
-          "type": "MODEL",
-          "link": 95
-        },
-        {
-          "label": "positive",
-          "localized_name": "positive",
-          "name": "positive",
-          "type": "CONDITIONING",
-          "link": 64
-        },
-        {
-          "label": "negative",
-          "localized_name": "negative",
-          "name": "negative",
-          "type": "CONDITIONING",
-          "link": 65
-        },
-        {
-          "label": "latent_image",
-          "localized_name": "latent_image",
-          "name": "latent_image",
-          "type": "LATENT",
-          "link": 73
-        }
-      ],
-      "outputs": [
-        {
-          "label": "LATENT",
-          "localized_name": "LATENT",
-          "name": "LATENT",
-          "type": "LATENT",
-          "slot_index": 0,
-          "links": [
-            7
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.27",
-        "Node name for S&R": "KSampler"
-      },
-      "widgets_values": [
-        753963817490113,
-        "randomize",
-        20,
-        1,
-        "euler",
-        "normal",
-        1
-      ]
-    },
-    {
       "id": 43,
       "type": "PreviewImage",
       "pos": [
@@ -220,7 +100,7 @@
         625.5296020507812
       ],
       "flags": {},
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -253,7 +133,7 @@
         46
       ],
       "flags": {},
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -302,7 +182,7 @@
         893.8475341796875
       ],
       "flags": {},
-      "order": 13,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -419,7 +299,7 @@
         86
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -594,7 +474,7 @@
         82
       ],
       "flags": {},
-      "order": 8,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -626,11 +506,171 @@
       ]
     },
     {
-      "id": 49,
+      "id": 3,
+      "type": "KSampler",
+      "pos": [
+        1280,
+        100
+      ],
+      "size": [
+        315,
+        262
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "model",
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 99
+        },
+        {
+          "label": "positive",
+          "localized_name": "positive",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 64
+        },
+        {
+          "label": "negative",
+          "localized_name": "negative",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 65
+        },
+        {
+          "label": "latent_image",
+          "localized_name": "latent_image",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 73
+        }
+      ],
+      "outputs": [
+        {
+          "label": "LATENT",
+          "localized_name": "LATENT",
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            7
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        677729013463731,
+        "fixed",
+        20,
+        1,
+        "euler",
+        "normal",
+        1
+      ]
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [
+        300.0365905761719,
+        249.09181213378906
+      ],
+      "size": [
+        425.27801513671875,
+        180.6060791015625
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "clip",
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 63
+        }
+      ],
+      "outputs": [
+        {
+          "label": "CONDITIONING",
+          "localized_name": "CONDITIONING",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            68
+          ]
+        }
+      ],
+      "title": "CLIP Text Encode (Negative Prompt)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 53,
+      "type": "NunchakuFluxLoraLoader",
+      "pos": [
+        990.1519775390625,
+        -199.45751953125
+      ],
+      "size": [
+        340.20001220703125,
+        82
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 98
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            99
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NunchakuFluxLoraLoader"
+      },
+      "widgets_values": [
+        "depth.safetensors",
+        0.9500000000000002
+      ]
+    },
+    {
+      "id": 52,
       "type": "NunchakuFluxDiTLoader",
       "pos": [
-        963.892578125,
-        -199.60679626464844
+        615.4609985351562,
+        -233.65086364746094
       ],
       "size": [
         315,
@@ -646,7 +686,7 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            95
+            98
           ]
         }
       ],
@@ -654,7 +694,7 @@
         "Node name for S&R": "NunchakuFluxDiTLoader"
       },
       "widgets_values": [
-        "svdq-int4-flux.1-depth-dev",
+        "svdq-int4-flux.1-dev",
         0,
         "nunchaku-fp16",
         "auto",
@@ -794,8 +834,16 @@
       "IMAGE"
     ],
     [
-      95,
-      49,
+      98,
+      52,
+      0,
+      53,
+      0,
+      "MODEL"
+    ],
+    [
+      99,
+      53,
       0,
       3,
       0,
@@ -808,8 +856,8 @@
     "ds": {
       "scale": 0.8140274938684042,
       "offset": [
-        583.9452653400073,
-        380.90044568833537
+        534.4549983751488,
+        322.67139610550964
       ]
     },
     "node_versions": {

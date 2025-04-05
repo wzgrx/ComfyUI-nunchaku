@@ -1,4 +1,6 @@
 {
+  "id": "0c258e12-f212-48d3-b71e-820714cad75f",
+  "revision": 0,
   "last_node_id": 58,
   "last_link_id": 108,
   "nodes": [
@@ -18,30 +20,32 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "samples",
           "localized_name": "samples",
+          "name": "samples",
           "type": "LATENT",
           "link": 7
         },
         {
-          "name": "vae",
           "localized_name": "vae",
+          "name": "vae",
           "type": "VAE",
           "link": 60
         }
       ],
       "outputs": [
         {
-          "name": "IMAGE",
           "localized_name": "IMAGE",
+          "name": "IMAGE",
           "type": "IMAGE",
+          "slot_index": 0,
           "links": [
             95
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
         "Node name for S&R": "VAEDecode"
       },
       "widgets_values": []
@@ -62,66 +66,68 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "positive",
           "localized_name": "positive",
+          "name": "positive",
           "type": "CONDITIONING",
           "link": 80
         },
         {
-          "name": "negative",
           "localized_name": "negative",
+          "name": "negative",
           "type": "CONDITIONING",
           "link": 81
         },
         {
-          "name": "vae",
           "localized_name": "vae",
+          "name": "vae",
           "type": "VAE",
           "link": 82
         },
         {
-          "name": "pixels",
           "localized_name": "pixels",
+          "name": "pixels",
           "type": "IMAGE",
           "link": 107
         },
         {
-          "name": "mask",
           "localized_name": "mask",
+          "name": "mask",
           "type": "MASK",
           "link": 108
         }
       ],
       "outputs": [
         {
-          "name": "positive",
           "localized_name": "positive",
+          "name": "positive",
           "type": "CONDITIONING",
+          "slot_index": 0,
           "links": [
             77
-          ],
-          "slot_index": 0
+          ]
         },
         {
-          "name": "negative",
           "localized_name": "negative",
+          "name": "negative",
           "type": "CONDITIONING",
+          "slot_index": 1,
           "links": [
             78
-          ],
-          "slot_index": 1
+          ]
         },
         {
-          "name": "latent",
           "localized_name": "latent",
+          "name": "latent",
           "type": "LATENT",
+          "slot_index": 2,
           "links": [
             88
-          ],
-          "slot_index": 2
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
         "Node name for S&R": "InpaintModelConditioning"
       },
       "widgets_values": [
@@ -144,46 +150,48 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "model",
           "localized_name": "model",
+          "name": "model",
           "type": "MODEL",
           "link": 102
         },
         {
-          "name": "positive",
           "localized_name": "positive",
+          "name": "positive",
           "type": "CONDITIONING",
           "link": 77
         },
         {
-          "name": "negative",
           "localized_name": "negative",
+          "name": "negative",
           "type": "CONDITIONING",
           "link": 78
         },
         {
-          "name": "latent_image",
           "localized_name": "latent_image",
+          "name": "latent_image",
           "type": "LATENT",
           "link": 88
         }
       ],
       "outputs": [
         {
-          "name": "LATENT",
           "localized_name": "LATENT",
+          "name": "LATENT",
           "type": "LATENT",
+          "slot_index": 0,
           "links": [
             7
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
         "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        479246542740385,
+        53039932755901,
         "randomize",
         20,
         1,
@@ -208,25 +216,27 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "conditioning",
           "localized_name": "conditioning",
+          "name": "conditioning",
           "type": "CONDITIONING",
           "link": 41
         }
       ],
       "outputs": [
         {
-          "name": "CONDITIONING",
           "localized_name": "CONDITIONING",
-          "type": "CONDITIONING",
+          "name": "CONDITIONING",
           "shape": 3,
+          "type": "CONDITIONING",
+          "slot_index": 0,
           "links": [
             80
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
         "Node name for S&R": "FluxGuidance"
       },
       "widgets_values": [
@@ -251,25 +261,27 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "clip",
           "localized_name": "clip",
+          "name": "clip",
           "type": "CLIP",
           "link": 63
         }
       ],
       "outputs": [
         {
-          "name": "CONDITIONING",
           "localized_name": "CONDITIONING",
+          "name": "CONDITIONING",
           "type": "CONDITIONING",
+          "slot_index": 0,
           "links": [
             81
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "title": "CLIP Text Encode (Negative Prompt)",
       "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
         "Node name for S&R": "CLIPTextEncode"
       },
       "widgets_values": [
@@ -295,8 +307,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "CLIP",
           "localized_name": "CLIP",
+          "name": "CLIP",
           "type": "CLIP",
           "links": [
             62,
@@ -305,6 +317,8 @@
         }
       ],
       "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
         "Node name for S&R": "DualCLIPLoader"
       },
       "widgets_values": [
@@ -330,39 +344,41 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "image",
           "localized_name": "image",
+          "name": "image",
           "type": "IMAGE",
           "link": 105
         },
         {
-          "name": "mask",
           "localized_name": "mask",
+          "name": "mask",
           "type": "MASK",
           "link": 106
         }
       ],
       "outputs": [
         {
-          "name": "image",
           "localized_name": "image",
+          "name": "image",
           "type": "IMAGE",
+          "slot_index": 0,
           "links": [
             107
-          ],
-          "slot_index": 0
+          ]
         },
         {
-          "name": "mask",
           "localized_name": "mask",
+          "name": "mask",
           "type": "MASK",
+          "slot_index": 1,
           "links": [
             108
-          ],
-          "slot_index": 1
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-inpainteasy",
+        "ver": "1.0.2",
         "Node name for S&R": "ImageAndMaskResizeNode"
       },
       "widgets_values": [
@@ -389,25 +405,27 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "clip",
           "localized_name": "clip",
+          "name": "clip",
           "type": "CLIP",
           "link": 62
         }
       ],
       "outputs": [
         {
-          "name": "CONDITIONING",
           "localized_name": "CONDITIONING",
+          "name": "CONDITIONING",
           "type": "CONDITIONING",
+          "slot_index": 0,
           "links": [
             41
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "title": "CLIP Text Encode (Positive Prompt)",
       "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
         "Node name for S&R": "CLIPTextEncode"
       },
       "widgets_values": [
@@ -460,32 +478,35 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "IMAGE",
           "localized_name": "IMAGE",
-          "type": "IMAGE",
+          "name": "IMAGE",
           "shape": 3,
+          "type": "IMAGE",
+          "slot_index": 0,
           "links": [
             105
-          ],
-          "slot_index": 0
+          ]
         },
         {
-          "name": "MASK",
           "localized_name": "MASK",
-          "type": "MASK",
+          "name": "MASK",
           "shape": 3,
+          "type": "MASK",
+          "slot_index": 1,
           "links": [
             106
-          ],
-          "slot_index": 1
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
         "clipspace/clipspace-mask-331829.799999997.png [input]",
-        "image"
+        "image",
+        ""
       ]
     },
     {
@@ -505,17 +526,19 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "VAE",
           "localized_name": "VAE",
+          "name": "VAE",
           "type": "VAE",
+          "slot_index": 0,
           "links": [
             60,
             82
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
         "Node name for S&R": "VAELoader"
       },
       "widgets_values": [
@@ -538,30 +561,33 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "images",
           "localized_name": "images",
+          "name": "images",
           "type": "IMAGE",
           "link": 95
         }
       ],
       "outputs": [],
       "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
         "Node name for S&R": "SaveImage"
       },
       "widgets_values": [
-        "ComfyUI"
+        "ComfyUI",
+        ""
       ]
     },
     {
       "id": 45,
       "type": "SVDQuantFluxDiTLoader",
       "pos": [
-        936.3029174804688,
-        -113.06819915771484
+        944.622314453125,
+        -189.1898651123047
       ],
       "size": [
         315,
-        106
+        202
       ],
       "flags": {},
       "order": 4,
@@ -569,13 +595,13 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "MODEL",
           "localized_name": "MODEL",
+          "name": "MODEL",
           "type": "MODEL",
+          "slot_index": 0,
           "links": [
             102
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "properties": {
@@ -583,8 +609,12 @@
       },
       "widgets_values": [
         "svdq-int4-flux.1-fill-dev",
-        "disable",
-        0
+        0,
+        "nunchaku-fp16",
+        "auto",
+        0,
+        "bfloat16",
+        "enabled"
       ]
     }
   ],
@@ -732,8 +762,8 @@
     "ds": {
       "scale": 1.01525597994771,
       "offset": [
-        -134.7173442538892,
-        224.9285090893139
+        -386.9543052427839,
+        140.01730865654588
       ]
     },
     "node_versions": {

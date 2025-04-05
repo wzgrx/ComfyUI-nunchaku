@@ -5,22 +5,20 @@
 <a href="http://arxiv.org/abs/2411.05007"><b>Paper</b></a> | <a href="https://hanlab.mit.edu/projects/svdquant"><b>Website</b></a> | <a href="https://hanlab.mit.edu/blog/svdquant"><b>Blog</b></a> | <a href="https://svdquant.mit.edu"><b>Demo</b></a> | <a href="https://huggingface.co/collections/mit-han-lab/svdquant-67493c2c2e62a1fc6e93f45c"><b>HuggingFace</b></a> | <a href="https://modelscope.cn/collections/svdquant-468e8f780c2641"><b>ModelScope</b></a>
 </h3>
 
-This repository provides the ComfyUI node for [**Nunchaku**](https://github.com/mit-han-lab/nunchaku), an efficient inference engine for 4-bit diffusion models quantized with [SVDQuant](http://arxiv.org/abs/2411.05007). For the quantization library, check out [DeepCompressor](https://github.com/mit-han-lab/deepcompressor).
+This repository provides the ComfyUI node for [**Nunchaku**](https://github.com/mit-han-lab/nunchaku), an efficient inference engine for 4-bit neural networks quantized with [SVDQuant](http://arxiv.org/abs/2411.05007). For the quantization library, check out [DeepCompressor](https://github.com/mit-han-lab/deepcompressor).
 
 Join our user groups on [**Slack**](https://join.slack.com/t/nunchaku/shared_invite/zt-3170agzoz-NgZzWaTrEj~n2KEV3Hpl5Q) and [**WeChat**](https://github.com/mit-han-lab/nunchaku/blob/main/assets/wechat.jpg?raw=true) for discussions—details [here](https://github.com/mit-han-lab/nunchaku/issues/149). If you have any questions, run into issues, or are interested in contributing, feel free to share your thoughts with us!
 
 # Nunchaku ComfyUI Node
 
 ![comfyui](assets/comfyui.jpg)
+## News
+
+- **[2025-04-05]** 🚀 **Release v0.2.0!** This release introduces [**multi-LoRA**](workflows/nunchaku-flux.1-dev.json) and [**ControlNet**](workflows/nunchaku-flux.1-dev-controlnet-union-pro.json) support, with enhanced performance using FP16 attention and First-Block Cache. We've also added [**20-series GPU**](examples/flux.1-dev-turing.py) compatibility and official workflows for [FLUX.1-redux](workflows/nunchaku-flux.1-redux-dev.json)!
+
 ## Installation
 
 Please first install `nunchaku` following the instructions in [README.md](https://github.com/mit-han-lab/nunchaku?tab=readme-ov-file#installation). 
-
-**[Optional]** You need to install `image_gen_aux` if you use `FluxDepthPreprocessor` node:
-
-```shell
-pip install git+https://github.com/asomoza/image_gen_aux.git
-```
 
 ### Comfy-CLI
 
@@ -88,7 +86,7 @@ comfy node registry-install nunchaku_nodes  # Install Nunchaku
        mkdir -p user/default/workflows
        
        # Copy workflow configurations
-       cp custom_nodes/ComfyUI-nunchaku/workflows/* user/default/workflows/
+       cp custom_nodes/nunchaku_nodes/workflows/* user/default/workflows/
        ```
 
      * Install any missing nodes (e.g., `comfyui-inpainteasy`) by following [this tutorial](https://github.com/ltdrdata/ComfyUI-Manager?tab=readme-ov-file#support-of-missing-nodes-installation).
@@ -109,6 +107,8 @@ comfy node registry-install nunchaku_nodes  # Install Nunchaku
 
 ## Nunchaku Nodes
 
+**Note: We've renamed our nodes from 'SVDQuant XXX Loader' to 'Nunchaku XXX Loader'. Please update your workflows accordingly.**
+
 * **Nunchaku Flux DiT Loader**: A node for loading the FLUX diffusion model. 
 
   * `model_path`: Specifies the model's location. You need to manually download the model folder from our [Hugging Face](https://huggingface.co/collections/mit-han-lab/svdquant-67493c2c2e62a1fc6e93f45c) or [ModelScope](https://modelscope.cn/collections/svdquant-468e8f780c2641) collection. For example, run
@@ -121,27 +121,27 @@ comfy node registry-install nunchaku_nodes  # Install Nunchaku
 
     **Note: If you rename the model folder, ensure that `comfy_config.json` is present in the folder. You can find this file in our corresponding repositories on [Hugging Face](https://huggingface.co/collections/mit-han-lab/svdquant-67493c2c2e62a1fc6e93f45c) or [ModelScope](https://modelscope.cn/collections/svdquant-468e8f780c2641).**
 
+  * `cache_threshold`: Controls the [First-Block Cache](https://github.com/chengzeyi/ParaAttention?tab=readme-ov-file#first-block-cache-our-dynamic-caching) tolerance, similar to `residual_diff_threshold` in [WaveSpeed](https://github.com/chengzeyi/Comfy-WaveSpeed). Increasing this value improves speed but may reduce quality. A typical value is 0.12. Setting it to 0 disables the effect.
+    
+  * `attention`: Defines the attention implementation method. You can choose between `flash-attention2` or `nunchaku-fp16`. Our `nunchaku-fp16` is approximately 1.2× faster than `flash-attention2` without compromising precision. For Turing GPUs (20-series), where `flash-attention2` is unsupported, you must use `nunchaku-fp16`.
+    
   * `cpu_offload`: Enables CPU offloading for the transformer model. While this reduces GPU memory usage, it may slow down inference.
 
-    - When set to `auto`, it will automatically detect your available GPU memory. If your GPU has more than **14GiB** of memory, offloading will be disabled. Otherwise, it will be enabled.
-    - **Memory usage will be further optimized in node v0.2.**
+    - When set to `auto`, it will automatically detect your available GPU memory. If your GPU has more than 14GiB of memory, offloading will be disabled. Otherwise, it will be enabled.
+    - **Memory usage will be further optimized in node later.**
 
   * `device_id`: Indicates the GPU ID for running the model.
+
+  * `data_type`: Defines the data type for the dequantized tensors. Turing GPUs (20-series) do not support `bfloat16` and can only use `float16`.
+
+  * `i2f_mode`: For Turing (20-series) GPUs, this option controls the GEMM implementation mode. `enabled` and `always` modes exhibit minor differences. This option is ignored on other GPU architectures.
 
 * **Nunchaku FLUX LoRA Loader**: A node for loading LoRA modules for SVDQuant FLUX models.
 
   * Place your LoRA checkpoints in the `models/loras` directory. These will appear as selectable options under `lora_name`.
-  * `lora_format` specifies the LoRA format. Supported formats include:
-    * `auto`: Automatically detects the appropriate LoRA format.
-    * `diffusers` (e.g., [aleksa-codes/flux-ghibsky-illustration](https://huggingface.co/aleksa-codes/flux-ghibsky-illustration))
-    * `comfyui` (e.g., [Shakker-Labs/FLUX.1-dev-LoRA-Children-Simple-Sketch](https://huggingface.co/Shakker-Labs/FLUX.1-dev-LoRA-Children-Simple-Sketch))
-    * `xlab` (e.g., [XLabs-AI/flux-RealismLora](https://huggingface.co/XLabs-AI/flux-RealismLora))
-    * `svdquant` (e.g., [mit-han-lab/svdquant-lora-collection](https://huggingface.co/mit-han-lab/svdquant-lora-collection)).
-
-  * `base_model_name`: Specifies the path to the quantized base model. If `lora_format` is set to `svdquant`, this option is ignored. You can set it to the same value as `model_path` in the **SVDQuant FLUX DiT Loader**.
   * `lora_strength`: Controls the strength of the LoRA module.
-  * `save_converted_lora`: If enabled, non-SVDQuant LoRA models will be converted and saved to disk, reducing conversion time in future runs. The converted LoRA will be stored in the same folder with the filename format: `svdq-{precision}-{name}.safetensors`.
-  * **Note**: Currently, only **one** LoRA can be loaded at a time. **Multi-LoRA support will be added in node v0.2.**
+  * You can connect **multiple LoRA nodes** together.
+  * **Note**: Starting from version 0.2.0, there is no need to convert LoRAs. Simply provide the **original LoRA files** to the loader.
 
 * **Nunchaku Text Encoder Loader**: A node for loading the text encoders.
 
@@ -163,13 +163,14 @@ comfy node registry-install nunchaku_nodes  # Install Nunchaku
        After downloading, specify the corresponding folder name as the `int4_model`.
 
 
-  * **Note**: Currently, loading the **4-bit T5 model** consumes excessive memory. **We will optimize this in node v0.2.**
+    * **Note**: Currently, loading the **4-bit T5 model** consumes excessive memory. **We will optimize this later.**
 
-* **FLUX.1 Depth Preprocessor**: A node for loading the depth estimation model and output the depth map. `model_path` specifies the model location. You can manually download the model repository from [Hugging Face](https://huggingface.co/LiheYoung/depth-anything-large-hf) and place it in the `models/checkpoints` directory. To download via CLI, run:
+
+
+* **FLUX.1 Depth Preprocessor (deprecated)** : A legacy node for loading a depth estimation model and producing a corresponding depth map. The `model_path` parameter specifies the location of the model checkpoint. You can manually download the model repository from [Hugging Face](https://huggingface.co/LiheYoung/depth-anything-large-hf) and place it under the `models/checkpoints` directory. Alternatively, use the following CLI command:
 
   ```shell
   huggingface-cli download LiheYoung/depth-anything-large-hf --local-dir models/checkpoints/depth-anything-large-hf
   ```
 
-  
-
+  **Note**: This node is deprecated and will be removed in a future release. Please use the updated **"Depth Anything"** node with the `depth_anything_vitl14.pth` model file instead.

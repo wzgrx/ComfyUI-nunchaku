@@ -1,7 +1,7 @@
 [project]
-name = "nunchaku_nodes"
+name = "ComfyUI-nunchaku"
 description = "Nunchaku ComfyUI Node. Nunchaku is the inference that supports SVDQuant. SVDQuant is a new post-training training quantization paradigm for diffusion models, which quantize both the weights and activations of FLUX.1 to 4 bits, achieving 3.5× memory and 8.7× latency reduction on a 16GB laptop 4090 GPU. See more details: https://github.com/mit-han-lab/nunchaku"
-version = "0.1.6"
+version = "0.2.0"
 license = { file = "LICENSE.txt" }
 dependencies = []
 requires-python = ">=3.10, <3.13"
@@ -12,5 +12,5 @@ Repository = "https://github.com/mit-han-lab/ComfyUI-nunchaku"
 
 [tool.comfy]
 PublisherId = "lmxyy1999"
-DisplayName = "Nunchaku"
+DisplayName = "ComfyUI-nunchaku"
 Icon = "https://raw.githubusercontent.com/mit-han-lab/nunchaku/96615bd93a1f0d2cf98039fddecfec43ce34cc96/assets/nunchaku.svg"

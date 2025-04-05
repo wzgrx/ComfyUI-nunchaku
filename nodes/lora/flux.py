@@ -1,50 +1,22 @@
+import copy
 import logging
-import os
-import tempfile
 
 import folder_paths
-from nunchaku.lora.flux import comfyui2diffusers, convert_to_nunchaku_flux_lowrank_dict, detect_format, xlab2diffusers
-from safetensors.torch import save_file
+from nunchaku.lora.flux import to_diffusers
+from ..models.flux import ComfyFluxWrapper
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("NunchakuFluxLoraLoader")
 
 
 class NunchakuFluxLoraLoader:
-    def __init__(self):
-        self.cur_lora_name = "None"
 
     @classmethod
     def INPUT_TYPES(s):
-        lora_name_list = ["None", *folder_paths.get_filename_list("loras")]
-
-        prefixes = folder_paths.folder_names_and_paths["diffusion_models"][0]
-        base_model_paths = set()
-        for prefix in prefixes:
-            if os.path.exists(prefix) and os.path.isdir(prefix):
-                base_model_paths_ = os.listdir(prefix)
-                base_model_paths_ = [
-                    folder
-                    for folder in base_model_paths_
-                    if not folder.startswith(".") and os.path.isdir(os.path.join(prefix, folder))
-                ]
-                base_model_paths.update(base_model_paths_)
-        base_model_paths = sorted(list(base_model_paths))
-
         return {
             "required": {
                 "model": ("MODEL", {"tooltip": "The diffusion model the LoRA will be applied to."}),
-                "lora_name": (lora_name_list, {"tooltip": "The name of the LoRA."}),
-                "lora_format": (
-                    ["auto", "comfyui", "diffusers", "svdquant", "xlab"],
-                    {"tooltip": "The format of the LoRA."},
-                ),
-                "base_model_name": (
-                    base_model_paths,
-                    {
-                        "tooltip": "If the lora format is SVDQuant, this field has no use. Otherwise, the base model's state dictionary is required for converting the LoRA weights to SVDQuant."
-                    },
-                ),
+                "lora_name": (folder_paths.get_filename_list("loras"), {"tooltip": "The name of the LoRA."}),
                 "lora_strength": (
                     "FLOAT",
                     {
@@ -53,12 +25,6 @@ class NunchakuFluxLoraLoader:
                         "max": 100.0,
                         "step": 0.01,
                         "tooltip": "How strongly to modify the diffusion model. This value can be negative.",
-                    },
-                ),
-                "save_converted_lora": (
-                    ["disable", "enable"],
-                    {
-                        "tooltip": "If enabled, the converted LoRA will be saved as a .safetensors file in the save directory of your LoRA file."
                     },
                 ),
             }
@@ -73,76 +39,34 @@ class NunchakuFluxLoraLoader:
     DESCRIPTION = (
         "LoRAs are used to modify the diffusion model, "
         "altering the way in which latents are denoised such as applying styles. "
-        "Currently, only one LoRA nodes can be applied."
+        "You can link multiple LoRA nodes."
     )
 
-    def load_lora(
-        self,
-        model,
-        lora_name: str,
-        lora_format: str,
-        base_model_name: str,
-        lora_strength: float,
-        save_converted_lora: str,
-    ):
-        if self.cur_lora_name == lora_name:
-            if self.cur_lora_name == "None":
-                pass  # Do nothing since the lora is None
-            else:
-                model.model.diffusion_model.model.set_lora_strength(lora_strength)
-        else:
-            if lora_name == "None":
-                model.model.diffusion_model.model.set_lora_strength(0)
-            else:
-                try:
-                    lora_path = folder_paths.get_full_path_or_raise("loras", lora_name)
-                except FileNotFoundError:
-                    lora_path = lora_name
-                if lora_format == "auto":
-                    lora_format = detect_format(lora_path)
-                if lora_format != "svdquant":
-                    if lora_format == "comfyui":
-                        input_lora = comfyui2diffusers(lora_path)
-                    elif lora_format == "xlab":
-                        input_lora = xlab2diffusers(lora_path)
-                    elif lora_format == "diffusers":
-                        input_lora = lora_path
-                    else:
-                        raise ValueError(f"Invalid LoRA format {lora_format}.")
-                    prefix = os.path.join(folder_paths.models_dir, "diffusion_models")
-                    base_model_path = os.path.join(prefix, base_model_name, "transformer_blocks.safetensors")
-                    if not os.path.exists(base_model_path):
-                        # download from huggingface
-                        base_model_path = os.path.join(base_model_name, "transformer_blocks.safetensors")
-                    state_dict = convert_to_nunchaku_flux_lowrank_dict(base_model_path, input_lora)
+    def load_lora(self, model, lora_name: str, lora_strength: float):
+        model_wrapper = model.model.diffusion_model
+        assert isinstance(model_wrapper, ComfyFluxWrapper)
 
-                    if save_converted_lora == "enable":
-                        dirname = os.path.dirname(lora_path)
-                        basename = os.path.basename(lora_path)
-                        if "fp4" in base_model_path:
-                            precision = "fp4"
-                        else:
-                            precision = "int4"
-                        converted_name = f"svdq-{precision}-{basename}"
-                        lora_converted_path = os.path.join(dirname, converted_name)
-                        if not os.path.exists(lora_converted_path):
-                            save_file(state_dict, lora_converted_path)
-                            logger.info(f"Saved converted LoRA to: {lora_converted_path}")
-                        else:
-                            logger.info(f"Converted LoRA already exists at: {lora_converted_path}")
-                        model.model.diffusion_model.model.update_lora_params(lora_converted_path)
-                    else:
-                        with tempfile.NamedTemporaryFile(suffix=".safetensors", delete=False) as tmp_file:
-                            tmp_file_path = tmp_file.name
-                            tmp_file.close()
-                            try:
-                                save_file(state_dict, tmp_file_path)
-                                model.model.diffusion_model.model.update_lora_params(tmp_file_path)
-                            finally:
-                                os.remove(tmp_file_path)
-                else:
-                    model.model.diffusion_model.model.update_lora_params(lora_path)
-                model.model.diffusion_model.model.set_lora_strength(lora_strength)
-            self.cur_lora_name = lora_name
+        transformer = model_wrapper.model
+        model_wrapper.model = None
+        ret_model = copy.deepcopy(model)  # copy everything except the model
+        ret_model_wrapper = ret_model.model.diffusion_model
+        assert isinstance(ret_model_wrapper, ComfyFluxWrapper)
 
-        return (model,)
+        model_wrapper.model = transformer
+        ret_model_wrapper.model = transformer
+
+        lora_path = folder_paths.get_full_path_or_raise("loras", lora_name)
+        ret_model_wrapper.loras.append((lora_path, lora_strength))
+
+        sd = to_diffusers(lora_path)
+        if "transformer.x_embedder.lora_A.weight" in sd:
+            new_in_channels = sd["transformer.x_embedder.lora_A.weight"].shape[1]
+            assert new_in_channels % 4 == 0
+            new_in_channels = new_in_channels // 4
+
+            old_in_channels = ret_model.model.model_config.unet_config["in_channels"]
+            assert old_in_channels <= new_in_channels
+            if old_in_channels < new_in_channels:
+                ret_model.model.model_config.unet_config["in_channels"] = new_in_channels
+
+        return (ret_model,)
