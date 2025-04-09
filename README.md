@@ -14,6 +14,7 @@ Join our user groups on [**Slack**](https://join.slack.com/t/nunchaku/shared_inv
 ![comfyui](assets/comfyui.jpg)
 ## News
 
+- **[2025-04-09]** 📢 Published the [April roadmap](https://github.com/mit-han-lab/nunchaku/issues/266) and an [FAQ](https://github.com/mit-han-lab/nunchaku/discussions/262) to help the community get started and stay up to date with Nunchaku’s development.
 - **[2025-04-05]** 🚀 **Release v0.2.0!** This release introduces [**multi-LoRA**](workflows/nunchaku-flux.1-dev.json) and [**ControlNet**](workflows/nunchaku-flux.1-dev-controlnet-union-pro.json) support, with enhanced performance using FP16 attention and First-Block Cache. We've also added [**20-series GPU**](examples/flux.1-dev-turing.py) compatibility and official workflows for [FLUX.1-redux](workflows/nunchaku-flux.1-redux-dev.json)!
 
 ## Installation
