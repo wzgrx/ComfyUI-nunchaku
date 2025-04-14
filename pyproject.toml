@@ -7,7 +7,7 @@ dependencies = []
 requires-python = ">=3.10, <3.13"
 
 [tool.ruff]
-line-length = 140
+line-length = 120
 
 [tool.ruff.lint]
 select = ["E", "W", "F"]
