@@ -207,7 +207,8 @@ class NunchakuFluxDiTLoader:
                     ["auto", "enable", "disable"],
                     {
                         "default": "auto",
-                        "tooltip": "Whether to enable CPU offload for the transformer model. 'auto' will enable it if the GPU memory is less than 14G.",
+                        "tooltip": "Whether to enable CPU offload for the transformer model."
+                                   "auto' will enable it if the GPU memory is less than 14G.",
                     },
                 ),
                 "device_id": (
