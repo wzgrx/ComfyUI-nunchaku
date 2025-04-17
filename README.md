@@ -6,7 +6,7 @@
 </h3>
 
 <h3 align="center">
-<a href="https://github.com/mit-han-lab/ComfyUI-nunchaku/blob/main/README.md"><b>English</b></a> | <a href="https://github.com/mit-han-lab/ComfyUI-nunchaku/blob/main/README_ZH.md"><b>中文</b></a>
+<a href="README.md"><b>English</b></a> | <a href="README_ZH.md"><b>中文</b></a>
 </h3>
 
 This repository provides the ComfyUI node for [**Nunchaku**](https://github.com/mit-han-lab/nunchaku), an efficient inference engine for 4-bit neural networks quantized with [SVDQuant](http://arxiv.org/abs/2411.05007). For the quantization library, check out [DeepCompressor](https://github.com/mit-han-lab/deepcompressor).
@@ -18,10 +18,15 @@ Join our user groups on [**Slack**](https://join.slack.com/t/nunchaku/shared_inv
 ![comfyui](assets/comfyui.jpg)
 ## News
 
+- **[2025-04-16]** 🎥 Released tutorial videos in both [**English**](https://youtu.be/YHAVe-oM7U8?si=cM9zaby_aEHiFXk0) and [**Chinese**](https://www.bilibili.com/video/BV1BTocYjEk5/?share_source=copy_web&vd_source=8926212fef622f25cc95380515ac74ee) to assist installation and usage.
 - **[2025-04-09]** 📢 Published the [April roadmap](https://github.com/mit-han-lab/nunchaku/issues/266) and an [FAQ](https://github.com/mit-han-lab/nunchaku/discussions/262) to help the community get started and stay up to date with Nunchaku’s development.
 - **[2025-04-05]** 🚀 **Release v0.2.0!** This release introduces [**multi-LoRA**](workflows/nunchaku-flux.1-dev.json) and [**ControlNet**](workflows/nunchaku-flux.1-dev-controlnet-union-pro.json) support, with enhanced performance using FP16 attention and First-Block Cache. We've also added [**20-series GPU**](examples/flux.1-dev-turing.py) compatibility and official workflows for [FLUX.1-redux](workflows/nunchaku-flux.1-redux-dev.json)!
 
 ## Installation
+
+We provide tutorial videos to help you install and use Nunchaku on Windows, available in both [**English**](https://youtu.be/YHAVe-oM7U8?si=cM9zaby_aEHiFXk0) and [**Chinese**](https://www.bilibili.com/video/BV1BTocYjEk5/?share_source=copy_web&vd_source=8926212fef622f25cc95380515ac74ee). You can also follow the corresponding step-by-step text guide at [`docs/setup_windows.md`](docs/setup_windows.md). If you run into issues, these resources are a good place to start.
+
+### Prerequisites
 
 Please first install `nunchaku` following the instructions in [README.md](https://github.com/mit-han-lab/nunchaku?tab=readme-ov-file#installation). 
 

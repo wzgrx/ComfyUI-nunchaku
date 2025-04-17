@@ -6,7 +6,7 @@
 </h3>
 
 <h3 align="center">
-<a href="https://github.com/mit-han-lab/ComfyUI-nunchaku/blob/main/README.md"><b>English</b></a> | <a href="https://github.com/mit-han-lab/ComfyUI-nunchaku/blob/main/README_ZH.md"><b>中文</b></a>
+<a href="README.md"><b>English</b></a> | <a href="README_ZH.md"><b>中文</b></a>
 </h3>
 
 该储存库为[**Nunchaku**](https://github.com/mit-han-lab/nunchaku)提供了ComfyUI节点，这是一个用于使用[SVDQuant](http://arxiv.org/abs/2411.05007)量化的 4 位神经网络的高效推理引擎。有关量化库，请查看 [DeepCompressor](https://github.com/mit-han-lab/deepcompressor).
@@ -18,12 +18,17 @@
 ![comfyui](assets/comfyui.jpg)
 ## 最新消息
 
+- **[2025-04-09]** 🎥 发布了[**英文**](https://youtu.be/YHAVe-oM7U8?si=cM9zaby_aEHiFXk0)和[**中文**](https://www.bilibili.com/video/BV1BTocYjEk5/?share_source=copy_web&vd_source=8926212fef622f25cc95380515ac74ee)教程视频，协助安装和使用Nunchaku。
 - **[2025-04-09]** 📢 发布了 [4月更新计划](https://github.com/mit-han-lab/nunchaku/issues/266)和[常见问题解答](https://github.com/mit-han-lab/nunchaku/discussions/262)来帮助社区朋友快速入门并及时了解Nunchaku的发展情况。
 - **[2025-04-05]** 🚀 **v0.2.0发布!** 这个版本支持了[**多LoRA**](workflows/nunchaku-flux.1-dev.json)和[**ControlNet**](workflows/nunchaku-flux.1-dev-controlnet-union-pro.json)，并且使用FP16 attention和First-Block Cache来增强性能. 我们添加了对[**Invidia20系显卡**](examples/flux.1-dev-turing.py)的支持，并制作了[FLUX.1-redux](workflows/nunchaku-flux.1-redux-dev.json)的官方工作流。
 
 ## 安装方法
 
-请先参阅[README.md](https://github.com/mit-han-lab/nunchaku?tab=readme-ov-file#installation)来安装 `nunchaku`
+我们提供了在 Windows 上安装和使用 Nunchaku 的教学视频，支持[**英文**](https://youtu.be/YHAVe-oM7U8?si=cM9zaby_aEHiFXk0)和[**中文**](https://www.bilibili.com/video/BV1BTocYjEk5/?share_source=copy_web&vd_source=8926212fef622f25cc95380515ac74ee)两个版本。同时，你也可以参考对应的图文教程 [`docs/setup_windows.md`](docs/setup_windows.md)。如果在安装过程中遇到问题，建议优先查阅这些资源。
+
+### 前置工作
+
+请先参阅[README.md](https://github.com/mit-han-lab/nunchaku?tab=readme-ov-file#installation)来安装 `nunchaku`。
 
 ### Comfy-CLI：ComfyUI的命令工具
 
@@ -165,11 +170,8 @@ comfy node registry-install ComfyUI-nunchaku  # Install Nunchaku
        ```
 
        After downloading, specify the corresponding folder name as the `int4_model`.
-
-
-    * **注意**：目前，加载**4-bit T5 model**会消耗过多内存. **我们将在以后对其进行优化**
-
-
+  
+  **注意**：目前，加载**4-bit T5 model**会消耗过多内存. **我们将在以后对其进行优化**
 
 * **FLUX.1 Depth Preprocessor (已弃用)**：一个用于加载depth模型并生成相应深度图的旧节点。`model_path`参数指定checkpoint模型的位置。您可以从[Hugging Face](https://huggingface.co/LiheYoung/depth-anything-large-hf) 下载模型并放在`models/checkpoints`目录中。或者，使用以下CLI命令：
 
