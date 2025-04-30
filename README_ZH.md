@@ -20,7 +20,7 @@
 
 - **[2025-04-09]** 🎥 发布了[**英文**](https://youtu.be/YHAVe-oM7U8?si=cM9zaby_aEHiFXk0)和[**中文**](https://www.bilibili.com/video/BV1BTocYjEk5/?share_source=copy_web&vd_source=8926212fef622f25cc95380515ac74ee)教程视频，协助安装和使用Nunchaku。
 - **[2025-04-09]** 📢 发布了 [4月更新计划](https://github.com/mit-han-lab/nunchaku/issues/266)和[常见问题解答](https://github.com/mit-han-lab/nunchaku/discussions/262)来帮助社区朋友快速入门并及时了解Nunchaku的发展情况。
-- **[2025-04-05]** 🚀 **v0.2.0发布!** 这个版本支持了[**多LoRA**](workflows/nunchaku-flux.1-dev.json)和[**ControlNet**](workflows/nunchaku-flux.1-dev-controlnet-union-pro.json)，并且使用FP16 attention和First-Block Cache来增强性能. 我们添加了对[**Invidia20系显卡**](examples/flux.1-dev-turing.py)的支持，并制作了[FLUX.1-redux](workflows/nunchaku-flux.1-redux-dev.json)的官方工作流。
+- **[2025-04-05]** 🚀 **v0.2.0发布!** 这个版本支持了[**多LoRA**](example_workflows/nunchaku-flux.1-dev.json)和[**ControlNet**](example_workflows/nunchaku-flux.1-dev-controlnet-union-pro.json)，并且使用FP16 attention和First-Block Cache来增强性能. 我们添加了对[**Invidia20系显卡**](examples/flux.1-dev-turing.py)的支持，并制作了[FLUX.1-redux](example_workflows/nunchaku-flux.1-redux-dev.json)的官方工作流。
 
 ## 安装方法
 
@@ -35,9 +35,9 @@
 您可以使用[`comfy-cli`](https://github.com/Comfy-Org/comfy-cli)在ComfyUI中运行Nunchaku：
 
 ```shell
-pip install comfy-cli  # Install ComfyUI CLI  
-comfy install          # Install ComfyUI  
-comfy node registry-install ComfyUI-nunchaku  # Install Nunchaku  
+pip install comfy-cli  # Install ComfyUI CLI
+comfy install          # Install ComfyUI
+comfy node registry-install ComfyUI-nunchaku  # Install Nunchaku
 ```
 
 ### ComfyUI-Manager
@@ -60,7 +60,7 @@ comfy node registry-install ComfyUI-nunchaku  # Install Nunchaku
 3. 启动ComfyUI
 
    ```shell
-   cd ..  # Return to the ComfyUI root directory  
+   cd ..  # Return to the ComfyUI root directory
    python main.py
    ```
 
@@ -87,18 +87,18 @@ comfy node registry-install ComfyUI-nunchaku  # Install Nunchaku
 
 1. **设置ComfyUI和Nunchaku**:
 
-     * Nunchaku的工作流可以在[`workflows`](./workflows)找到。想要找到它们，请将文件复制到ComfyUI的根目录中： `user/default/workflows`
+     * Nunchaku的工作流可以在[`workflows`](example_workflows)找到。想要找到它们，请将文件复制到ComfyUI的根目录中： `user/default/workflows`
        ```shell
        cd ComfyUI
-       
-       # Create the workflows directory if it doesn't exist
-       mkdir -p user/default/workflows
-       
+
+       # Create the example_workflows directory if it doesn't exist
+       mkdir -p user/default/example_workflows
+
        # Copy workflow configurations
-       cp custom_nodes/nunchaku_nodes/workflows/* user/default/workflows/
+       cp custom_nodes/nunchaku_nodes/example_workflows/* user/default/example_workflows/
        ```
 
-     * 按照[本教程](https://github.com/ltdrdata/ComfyUI-Manager?tab=readme-ov-file#support-of-missing-nodes-installation).安装所有缺失节点 (例如 `comfyui-inpainteasy`) 
+     * 按照[本教程](https://github.com/ltdrdata/ComfyUI-Manager?tab=readme-ov-file#support-of-missing-nodes-installation).安装所有缺失节点 (例如 `comfyui-inpainteasy`)
 
 2. **下载必要模型**: 按照[本教程](https://comfyanonymous.github.io/ComfyUI_examples/flux/)把必要的模型下载到对应的目录中。或者使用以下命令：
 
@@ -131,9 +131,9 @@ comfy node registry-install ComfyUI-nunchaku  # Install Nunchaku
     **注：如果重命名模型文件夹，确保文件夹中包含`comfy_config.json`.您可以在[Hugging Face](https://huggingface.co/collections/mit-han-lab/svdquant-67493c2c2e62a1fc6e93f45c)或者[ModelScope](https://modelscope.cn/collections/svdquant-468e8f780c2641)上的相应存储库中找到此文件。**
 
   * `cache_threshold`：控制[First-Block Cache](https://github.com/chengzeyi/ParaAttention?tab=readme-ov-file#first-block-cache-our-dynamic-caching)的容差，类似于[WaveSpeed](https://github.com/chengzeyi/Comfy-WaveSpeed)中的`residual_diff_threshold`。增加此值可以提高速度，但可能会降低质量。典型值为 0.12。将其设置为 0 将禁用该效果。
-    
+
   * `attention`：定义 attention 的实现方法. 您可以在`flash-attention2`或`nunchaku-fp16`之间进行选择。我们的`nunchaku-fp16`在不影响精度的情况下大约比`flash-attention2`快1.2x倍。对于Turing架构的显卡(20系), 如果不支持`flash-attention2`，则必须使用 `nunchaku-fp16`。
-    
+
   * `cpu_offload`：为transformer模型启用CPU卸载。虽然这减少了GPU内存的使用，但它可能会减慢推理速度。
 
     -当设置为`auto`的时候，它将自动检测您的可用 GPU 内存。如果您的GPU内存超过14GiB，则将禁用卸载。否则，它将启用。
@@ -170,7 +170,7 @@ comfy node registry-install ComfyUI-nunchaku  # Install Nunchaku
        ```
 
        After downloading, specify the corresponding folder name as the `int4_model`.
-  
+
   **注意**：目前，加载**4-bit T5 model**会消耗过多内存. **我们将在以后对其进行优化**
 
 * **FLUX.1 Depth Preprocessor (已弃用)**：一个用于加载depth模型并生成相应深度图的旧节点。`model_path`参数指定checkpoint模型的位置。您可以从[Hugging Face](https://huggingface.co/LiheYoung/depth-anything-large-hf) 下载模型并放在`models/checkpoints`目录中。或者，使用以下CLI命令：
