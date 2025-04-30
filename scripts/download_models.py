@@ -82,4 +82,6 @@ def download_loras():
 
 
 if __name__ == "__main__":
+    download_original_models()
     download_svdquant_models()
+    download_loras()
