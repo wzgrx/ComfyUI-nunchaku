@@ -81,7 +81,34 @@ def download_loras():
     )
 
 
+def download_other():
+    download_file(
+        repo_id="Shakker-Labs/FLUX.1-dev-ControlNet-Union-Pro-2.0",
+        filename="diffusion_pytorch_model.safetensors",
+        sub_folder="controlnet",
+        new_filename="controlnet-union-pro-2.0.safetensors",
+    )
+    download_file(
+        repo_id="jasperai/Flux.1-dev-Controlnet-Upscaler",
+        filename="diffusion_pytorch_model.safetensors",
+        sub_folder="controlnet",
+        new_filename="controlnet-upscaler.safetensors",
+    )
+    download_file(
+        repo_id="black-forest-labs/FLUX.1-Redux-dev",
+        filename="flux1-redux-dev.safetensors",
+        sub_folder="style_models",
+        new_filename="flux1-redux-dev.safetensors",
+    )
+    download_file(
+        repo_id="Comfy-Org/sigclip_vision_384",
+        filename="sigclip_vision_patch14_384.safetensors",
+        sub_folder="clip_vision",
+    )
+
+
 if __name__ == "__main__":
     download_original_models()
     download_svdquant_models()
     download_loras()
+    download_other()
