@@ -9,7 +9,6 @@ from torch import nn
 from nunchaku import NunchakuFluxTransformer2dModel
 from nunchaku.caching.utils import cache_context, create_cache_context
 from nunchaku.lora.flux.compose import compose_lora
-from nunchaku.pipeline.pipeline_flux_pulid import PuLIDPipeline
 from nunchaku.utils import load_state_dict_in_safetensors
 
 
@@ -18,7 +17,7 @@ class ComfyFluxWrapper(nn.Module):
         self,
         model: NunchakuFluxTransformer2dModel,
         config,
-        pulid_pipeline: PuLIDPipeline | None = None,
+        pulid_pipeline,
         customized_forward: Callable = None,
         forward_kwargs: dict | None = {},
     ):
