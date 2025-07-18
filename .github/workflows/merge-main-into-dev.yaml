@@ -1,6 +1,5 @@
 name: Merge main into dev
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
