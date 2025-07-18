@@ -102,7 +102,7 @@ jobs:
           git log -1 --oneline
           git submodule init
           git submodule update
-          NUNCHAKU_INSTALL_MODE=ALL python setup.py develop
+          python setup.py develop
       - name: Install ComfyUI and set up test environment
         run: |
           source $(conda info --base)/etc/profile.d/conda.sh
