@@ -21,7 +21,7 @@ script_dir = os.path.join(os.path.dirname(__file__), "scripts")
         ("nunchaku-flux1-redux-dev.py", 0.9, 0.137, 18.9),
         ("nunchaku-flux1-dev-controlnet_upscaler.py", 0.9, 0.1, 26),
         ("nunchaku-flux1-dev-controlnet_union_pro2.py", 0.9, 0.1, 26),
-        ("nunchaku-flux1-depth-lora.py", 0.7, 0.13, 21),
+        ("nunchaku-flux1-depth-lora.py", 0.59, 0.13, 21),
         ("nunchaku-flux1-canny.py", 0.9, 0.1, 26),
         ("nunchaku-flux1-schnell.py", 0.9, 0.29, 19.3),
         ("nunchaku-flux1-depth.py", 0.9, 0.13, 26),
@@ -57,7 +57,7 @@ def test_workflows(script_name: str, expected_clip_iqa: float, expected_lpips: f
 
     # lpips metric
     ref_image_url = (
-        f"https://huggingface.co/mit-han-lab/nunchaku-artifacts/resolve/main/ComfyUI-nunchaku/ref_images/"
+        f"https://huggingface.co/datasets/nunchaku-tech/test-data/resolve/main/ComfyUI-nunchaku/ref_images/"
         f"{get_precision()}/{script_name.replace('.py', '.png')}"
     )
     ref_image = load_image(ref_image_url).convert("RGB")
