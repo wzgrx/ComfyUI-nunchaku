@@ -85,4 +85,18 @@ intersphinx_mapping = {
     "nunchaku": ("https://nunchaku.tech/docs/nunchaku", None),
 }
 
+html_theme_options = {
+    "repository_url": "https://github.com/nunchaku-tech/ComfyUI-nunchaku",
+    "repository_branch": "main",
+    "path_to_docs": "docs/source",
+    "use_repository_button": True,
+    "use_edit_page_button": True,
+    "use_issues_button": True,
+    "use_download_button": True,
+    "show_navbar_depth": 2,
+    "home_page_in_toc": True,
+    "show_toc_level": 2,
+    # "announcement": "🔥 Nunchaku v1.2 released!",
+}
+
 html_favicon = "_static/nunchaku.ico"
