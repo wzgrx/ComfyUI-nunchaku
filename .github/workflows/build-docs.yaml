@@ -67,6 +67,7 @@ jobs:
         env:
           RSYNC_RSH: "ssh -o StrictHostKeyChecking=no -i id_rsa"
       - name: Clean up
+        if: always()
         run: |
           cd ..
           rm -rf *nunchaku* *ComfyUI*
