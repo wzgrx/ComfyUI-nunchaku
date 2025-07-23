@@ -79,4 +79,5 @@ jobs:
         if: always()
         run: |
           cd ..
-          rm -rf *nunchaku* *ComfyUI*
+          rm -rf nunchaku ComfyUI
+          rm comfyui_nunchaku
