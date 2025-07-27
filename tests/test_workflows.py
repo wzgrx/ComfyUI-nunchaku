@@ -35,6 +35,7 @@ script_dir = os.path.join(os.path.dirname(__file__), "scripts")
         ("nunchaku-flux1-dev-pulid.py", 0.9, 0.194, 15.8),
         ("nunchaku-flux1-kontext-dev.py", 0.9, 0.1, 18.3),
         ("nunchaku-flux1-kontext-dev-turbo_lora.py", 0.87, 0.13, 18.8),
+        ("nunchaku-flux1-ip-adapter.py", 0.6, 0.25, 19),
     ],
 )
 @pytest.mark.flaky(reruns=2, reruns_delay=0)
@@ -43,7 +44,7 @@ def test_workflows(script_name: str, expected_clip_iqa: float, expected_lpips: f
     torch.cuda.empty_cache()
     script_path = os.path.join(script_dir, script_name)
 
-    result = subprocess.run(["python", script_path], capture_output=True, text=True)
+    result = subprocess.run(["python", script_path])
     print(f"Running {script_path} -> Return code: {result.returncode}")
     assert result.returncode == 0, f"{script_path} failed with code {result.returncode}"
 
