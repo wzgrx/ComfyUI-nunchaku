@@ -65,7 +65,7 @@ class NunchakuWheelInstaller:
         dict
             A dictionary specifying the required inputs and their descriptions for the node interface.
         """
-        support_versions = ["v0.3.1"]
+        support_versions = ["v0.3.2"]
 
         return {
             "required": {
