@@ -179,6 +179,10 @@ class NunchakuQwenImageDiTLoader:
             The filename of the Qwen-Image model to load.
         cpu_offload : str
             Whether to enable CPU offload for the transformer model.
+        num_blocks_on_gpu : int
+            The number of transformer blocks to keep on GPU when CPU offload is enabled.
+        use_pin_memory : str
+            Whether to use pinned memory for the transformer blocks when CPU offload is enabled.
 
         Returns
         -------
