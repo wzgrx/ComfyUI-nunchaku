@@ -47,17 +47,13 @@ Image editing workflow using the Nunchaku Qwen-Image-Edit models.
 nunchaku-qwen-image-edit-2509.json
 ----------------------------------
 
-.. image:: https://huggingface.co/datasets/nunchaku-tech/cdn/resolve/main/ComfyUI-nunchaku/workflows/nunchaku-qwen-image-edit.png
-    :alt: nunchaku-qwen-image-edit.json
-    :target: https://github.com/nunchaku-tech/ComfyUI-nunchaku/blob/main/example_workflows/nunchaku-qwen-image-edit.json
+.. image:: https://huggingface.co/datasets/nunchaku-tech/cdn/resolve/main/ComfyUI-nunchaku/workflows/nunchaku-qwen-image-edit-2509.png
+   :alt: nunchaku-qwen-image-edit-2509.json
+   :target: https://github.com/nunchaku-tech/ComfyUI-nunchaku/blob/main/example_workflows/nunchaku-qwen-image-edit-2509.json
 
 Image editing workflow using the Nunchaku Qwen-Image-Edit-2509 models.
 
 **Links:**
-
-.. image:: https://huggingface.co/datasets/nunchaku-tech/cdn/resolve/main/ComfyUI-nunchaku/workflows/nunchaku-qwen-image-edit-2509.png
-   :alt: nunchaku-qwen-image-edit-2509.json
-   :target: https://github.com/nunchaku-tech/ComfyUI-nunchaku/blob/main/example_workflows/nunchaku-qwen-image-edit-2509.json
 
 - Workflow: :download:`nunchaku-qwen-image-edit-2509.json <https://github.com/nunchaku-tech/ComfyUI-nunchaku/blob/main/example_workflows/nunchaku-qwen-image-edit-2509.json>`
 - Nunchaku Qwen-Image-Edit: :download:`Hugging Face <https://huggingface.co/nunchaku-tech/nunchaku-qwen-image-edit-2509>` or :download:`ModelScope <https://modelscope.cn/models/nunchaku-tech/nunchaku-qwen-image-edit-2509>`
