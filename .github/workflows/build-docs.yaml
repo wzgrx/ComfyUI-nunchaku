@@ -71,5 +71,4 @@ jobs:
         if: always()
         run: |
           cd ..
-          rm -rf nunchaku ComfyUI
-          rm comfyui_nunchaku
+          rm -rf nunchaku
