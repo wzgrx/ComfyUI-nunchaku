@@ -1,6 +1,8 @@
 name: Build ComfyUI Desktop
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [build-desktop]
 permissions:
   contents: write
 jobs:
@@ -13,6 +15,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.client_payload.ref || github.ref }}
       - name: Extract version from pyproject.toml
         id: get_version
         run: |
