@@ -1,6 +1,8 @@
 name: Build ComfyUI Desktop
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [build-desktop]
 permissions:
   contents: write
 jobs:
@@ -14,6 +16,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.client_payload.ref || github.ref }}
       - name: Show latest commit
         run: git log -1 --oneline
         shell: bash
@@ -43,11 +47,6 @@ jobs:
       - name: Run build script
         run: |
           cd ..
-          where python
-          python --version
-          where node
-          node --version
-          rm -rf desktop
           ComfyUI-nunchaku\.github\workflows\build_comfyui_desktop.cmd
         shell: cmd
         env:
