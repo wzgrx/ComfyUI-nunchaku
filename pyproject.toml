@@ -152,7 +152,7 @@ conflicts = [
 
 [[tool.uv.index]]
 name = "nunchaku-wheels"
-url = "https://raw.githubusercontent.com/AppMana/comfyui-nunchaku/refs/heads/main/pypi/nunchaku_index.html"
+url = "https://raw.githubusercontent.com/nunchaku-tech/ComfyUI-nunchaku/refs/heads/dev/pypi/nunchaku_index.html"
 format = "flat"
 
 [tool.uv.sources]

@@ -43,6 +43,7 @@ REM 2. Clone ComfyUI desktop repo
 echo Cloning ComfyUI Desktop...
 git clone https://github.com/nunchaku-tech/desktop.git
 cd desktop
+git checkout ed6400a
 
 REM 3. Install Yarn using corepack
 echo Installing yarn...
