@@ -4,10 +4,10 @@ Building ComfyUI Desktop
 This document describes how to build the ComfyUI Desktop executable (EXE) on Windows systems.
 
 System Requirements
-===================
+-------------------
 
 Hardware and Operating System
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Windows 10/11 (64-bit)
 - Administrative privileges (required for some package installations)
@@ -15,12 +15,12 @@ Hardware and Operating System
 - Stable internet connection (for downloading dependencies)
 
 Node Version Manager (NVM)
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 NVM for Windows is **required** to manage Node.js versions. The build script expects NVM to be installed at ``%LocalAppData%\nvm``.
 
 Installing NVM for Windows
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Option 1: Using winget (Recommended)**
 
@@ -36,19 +36,19 @@ Download and install from the `NVM for Windows releases page <https://github.com
    After installation, you may need to restart your terminal or system for NVM to be available in your PATH.
 
 Visual Studio C++ Development Environment
-------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Visual Studio 2019 or later with the Desktop C++ workload is **required** for ``node-gyp`` compilation of native Node.js modules.
 
 Required Components
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
 
 1. **Visual Studio Community 2022** (17.12.1 or later)
 2. **Desktop development with C++ workload**
 3. **MSVC v143 x64 Spectre-mitigated libraries** (latest)
 
 Installing Spectre-mitigated Libraries
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Spectre-mitigated libraries are **critical dependencies** and must be installed separately:
 
@@ -63,7 +63,7 @@ The Spectre-mitigated libraries are **critical dependencies** and must be instal
    Without the Spectre-mitigated libraries, the build process will fail during native module compilation.
 
 Build Script Overview
-=====================
+---------------------
 
 The ``scripts/build_comfyui_desktop.cmd`` script automates the entire build process:
 
@@ -78,10 +78,10 @@ The ``scripts/build_comfyui_desktop.cmd`` script automates the entire build proc
 9. Building the application for NVIDIA GPUs
 
 Usage and Configuration
-=======================
+-----------------------
 
 Script Configuration
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 The script uses the following default versions (configurable at the top of the script):
 
@@ -106,7 +106,7 @@ If your installation paths differ, modify the ``PYTHON_EXE`` and ``NVM_HOME`` va
    Make sure NVM is installed and available in your PATH before running the build script. See the System Requirements section above for installation instructions.
 
 Running the Build
------------------
+~~~~~~~~~~~~~~~~~
 
 1. Open Windows Command Prompt (CMD) as **Administrator**
 
@@ -128,7 +128,7 @@ Running the Build
 4. Wait for the build to complete. The entire process may take 30 minutes to 1 hour, depending on network speed and machine performance.
 
 Build Output
-------------
+~~~~~~~~~~~~
 
 Upon successful completion, the script will:
 
@@ -138,10 +138,10 @@ Upon successful completion, the script will:
 - Produce the ready-to-use application package at ``desktop\dist\Comfy-*-win.zip``
 
 Troubleshooting
-===============
+---------------
 
 Common Issues
--------------
+~~~~~~~~~~~~~
 
 1. **"Module was compiled against a different Node.js version" error**
 
