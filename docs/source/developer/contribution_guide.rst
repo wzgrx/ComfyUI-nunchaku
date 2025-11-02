@@ -9,25 +9,25 @@ follow these steps for a smooth and efficient contribution process.
 🚀 Setting Up Test Environment
 ------------------------------
 
-**1. Fork and Clone the Repository**
+1. Fork and Clone the Repository
 
-New contributors should fork the repository to their GitHub account and clone locally:
+   New contributors should fork the repository to their GitHub account and clone locally:
 
-.. code-block:: shell
+   .. code-block:: shell
 
-   git clone https://github.com/<your_username>/ComfyUI-nunchaku.git
+      git clone https://github.com/<your_username>/ComfyUI-nunchaku.git
 
-**2. Install Dependencies**
+2. Install Dependencies
 
-Install the ``uv`` package manager and project dependencies:
+   Install the ``uv`` package manager and project dependencies:
 
-.. code-block:: shell
+   .. code-block:: shell
 
-   cd ComfyUI-nunchaku
-   pip install uv
-   uv venv # Create a new virtual environment if you don't already have one
+      cd ComfyUI-nunchaku
+      pip install uv
+      uv venv # Create a new virtual environment if you don't already have one
 
-Choose an installation method based on your development needs:
+   Choose an installation method based on your development needs:
 
 **Option A: Fresh Installation with Published Wheels**
 
@@ -105,7 +105,7 @@ When contributing new features or bug fixes, you must register a new test in the
 
 To add a test case:
 
-**1. Create a Workflow Folder**
+1. Create a Workflow Folder
 
    Create a new folder in ``tests/workflows/`` with a descriptive name (e.g., ``nunchaku-flux.1-schnell``). This folder must contain four JSON files:
 
@@ -118,7 +118,7 @@ To add a test case:
 
       Both ``ref.json`` and ``workflow.json`` are for backup purposes, making it easier for future maintenance, development, testing, and debugging.
 
-**2. Create the API Workflow**
+2. Create the API Workflow
 
    In ComfyUI, after designing your workflow, export it using ``Export (API)`` and save it as ``api.json`` (see example below).
 
@@ -126,7 +126,7 @@ To add a test case:
       :alt: ComfyUI Export API Example
       :align: center
 
-**3. Configure Test Cases**
+3. Configure Test Cases
 
    Create ``test_cases.json`` to define test parameters. You can override variables in ``api.json`` using the ``inputs`` field. Here's an example:
 
@@ -168,7 +168,7 @@ To add a test case:
 
    Run your test locally first (see :ref:`running-tests`). Use the local results as reference values. If you can only test one precision type (int4 or fp4), you can use the same reference values for both.
 
-**4. Add Additional Test Data (if needed)**
+4. Add Additional Test Data (if needed)
 
    If your test requires additional input images or models:
 
@@ -176,7 +176,7 @@ To add a test case:
    - Register the URLs in `test_data/inputs.yaml <https://github.com/nunchaku-tech/ComfyUI-nunchaku/blob/main/test_data/inputs.yaml>`__
    - If new models are required, update `scripts/download_models.py <https://github.com/nunchaku-tech/ComfyUI-nunchaku/blob/main/scripts/download_models.py>`__ and `test_data/models.yaml <https://github.com/nunchaku-tech/ComfyUI-nunchaku/blob/main/test_data/models.yaml>`__
 
-**5. Register Additional Custom Nodes (if needed)**
+5. Register Additional Custom Nodes (if needed)
 
    If your test requires additional ComfyUI custom nodes, register them in `test_data/custom_nodes.yaml <https://github.com/nunchaku-tech/ComfyUI-nunchaku/blob/main/test_data/custom_nodes.yaml>`__:
 
@@ -186,7 +186,7 @@ To add a test case:
         url: https://github.com/username/ComfyUI-CustomNode
         branch: abcdefg # commit hash or branch name
 
-   The ``scripts/setup_custom_nodes.py`` script automatically processes this configuration to:
+   The ``scripts/setup_custom_nodes.py`` script (which runs automatically during test workspace setup in Step 3) processes this configuration to:
 
    - Clone custom node repositories into the test workspace
    - Install Python dependencies from each node's ``requirements.txt`` (if present)
@@ -195,5 +195,3 @@ To add a test case:
    **Dependency Management:**
 
    By default, dependencies are installed from the custom node's ``requirements.txt``. To override this, create a file at ``test_data/dependencies/{node_name}.txt`` with your custom requirements. This is useful when the default requirements conflict with the test environment or need version pinning.
-
-   This script runs automatically during test workspace setup (Step 3).
